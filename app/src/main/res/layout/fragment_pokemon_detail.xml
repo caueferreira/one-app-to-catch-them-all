@@ -17,7 +17,8 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:text="MissingNo."
-        android:textSize="22sp" />
+        android:textSize="22sp"
+        android:textStyle="bold" />
 
     <ImageView
         android:id="@+id/sprite"
@@ -68,7 +69,9 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/type"
-        android:text="Stats" />
+        android:layout_marginTop="12dp"
+        android:text="Stats"
+        android:textStyle="bold" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/stats_list"
@@ -83,7 +86,9 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/stats_list"
-        android:text="Move List" />
+        android:layout_marginTop="12dp"
+        android:text="Move List"
+        android:textStyle="bold" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/move_list"
