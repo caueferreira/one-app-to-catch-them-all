@@ -64,14 +64,11 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.ViewHold
         holder.mTxtPokemonName.setText(mPokemons.get(position).getName());
         holder.mTxtPokemonNumber.setText(String.valueOf(position + 1));
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        holder.itemView.setOnClickListener(v -> {
 
-                Intent myIntent = new Intent(mActivity, PokemonDetailActivity.class);
-                myIntent.putExtra("number", position + 1);
-                mActivity.startActivity(myIntent);
-            }
+            Intent myIntent = new Intent(mActivity, PokemonDetailActivity.class);
+            myIntent.putExtra("number", position + 1);
+            mActivity.startActivity(myIntent);
         });
     }
 
