@@ -15,7 +15,7 @@ import java.util.List;
 import app.caueferreira.oneapptocatchthemall.R;
 import app.caueferreira.oneapptocatchthemall.data.entity.PokemonResponse;
 import app.caueferreira.oneapptocatchthemall.data.entity.PokemonResponseList;
-import app.caueferreira.oneapptocatchthemall.data.network.api.PokemonApi;
+import app.caueferreira.oneapptocatchthemall.data.repository.Pokedex;
 import app.caueferreira.oneapptocatchthemall.view.EndlessRecyclerOnScrollListener;
 import app.caueferreira.oneapptocatchthemall.view.PokemonAdapter;
 import rx.Subscriber;
@@ -33,7 +33,7 @@ public class ListPokemonActivityFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private PokemonAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private PokemonApi mPokemonApi;
+    private Pokedex mPokedex;
 
     private ProgressDialog mProgress;
 
@@ -53,11 +53,11 @@ public class ListPokemonActivityFragment extends Fragment {
         mAdapter = new PokemonAdapter(getActivity());
         mRecyclerView.setAdapter(mAdapter);
 
-        mPokemonApi = new PokemonApi();
+        mPokedex = new Pokedex();
 
         showLoading(true);
 
-        mPokemonApi.list()
+        mPokedex.list()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<PokemonResponseList>() {
@@ -80,7 +80,7 @@ public class ListPokemonActivityFragment extends Fragment {
         mRecyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener((LinearLayoutManager) mLayoutManager) {
             @Override
             public void onLoadMore(int page) {
-                mPokemonApi.list(page * 10, 10)
+                mPokedex.list(page * 10, 10)
                         .subscribeOn(Schedulers.newThread())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new Subscriber<PokemonResponseList>() {

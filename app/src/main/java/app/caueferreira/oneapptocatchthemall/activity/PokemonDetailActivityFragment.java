@@ -18,7 +18,7 @@ import android.widget.TextView;
 import java.net.URL;
 
 import app.caueferreira.oneapptocatchthemall.R;
-import app.caueferreira.oneapptocatchthemall.data.network.api.PokemonApi;
+import app.caueferreira.oneapptocatchthemall.data.repository.Pokedex;
 import app.caueferreira.oneapptocatchthemall.entity.Pokemon;
 import app.caueferreira.oneapptocatchthemall.view.MoveAdapter;
 import app.caueferreira.oneapptocatchthemall.view.StatsAdapter;
@@ -34,7 +34,7 @@ public class PokemonDetailActivityFragment extends Fragment {
     public PokemonDetailActivityFragment() {
     }
 
-    private PokemonApi mPokemonApi;
+    private Pokedex mPokedex;
 
     private TextView mTxtName, mTxtNumber, mTxtType, mTxtType2;
     private ImageView mImgSprite;
@@ -76,13 +76,13 @@ public class PokemonDetailActivityFragment extends Fragment {
         mMoveAdapter = new MoveAdapter(getActivity());
         mStatsAdapter = new StatsAdapter(getActivity());
 
-        mPokemonApi = new PokemonApi();
+        mPokedex = new Pokedex();
         mMovesView.setAdapter(mMoveAdapter);
         mStatsView.setAdapter(mStatsAdapter);
 
         showLoading(true);
 
-        mPokemonApi.get(position)
+        mPokedex.get(position)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<Pokemon>() {
