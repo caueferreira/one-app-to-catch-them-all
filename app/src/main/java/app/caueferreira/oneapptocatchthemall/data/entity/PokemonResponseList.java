@@ -1,4 +1,4 @@
-package app.caueferreira.oneapptocatchthemall.api;
+package app.caueferreira.oneapptocatchthemall.data.entity;
 
 import java.util.List;
 

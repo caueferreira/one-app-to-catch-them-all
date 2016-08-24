@@ -10,23 +10,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.gson.FieldNamingPolicy;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import java.util.List;
 
 import app.caueferreira.oneapptocatchthemall.R;
-import app.caueferreira.oneapptocatchthemall.api.PokemonService;
-import app.caueferreira.oneapptocatchthemall.api.PokemonResponse;
-import app.caueferreira.oneapptocatchthemall.api.PokemonResponseList;
+import app.caueferreira.oneapptocatchthemall.data.entity.PokemonResponse;
+import app.caueferreira.oneapptocatchthemall.data.entity.PokemonResponseList;
+import app.caueferreira.oneapptocatchthemall.data.network.api.PokemonApi;
 import app.caueferreira.oneapptocatchthemall.view.EndlessRecyclerOnScrollListener;
 import app.caueferreira.oneapptocatchthemall.view.PokemonAdapter;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -39,8 +33,7 @@ public class ListPokemonActivityFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private PokemonAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private Retrofit mRetrofit;
-    private PokemonService mPokemonApi;
+    private PokemonApi mPokemonApi;
 
     private ProgressDialog mProgress;
 
@@ -60,16 +53,7 @@ public class ListPokemonActivityFragment extends Fragment {
         mAdapter = new PokemonAdapter(getActivity());
         mRecyclerView.setAdapter(mAdapter);
 
-        Gson gson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .create();
-
-        mRetrofit = new Retrofit.Builder()
-                .baseUrl("http://pokeapi.co/api/v2/")
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-
-        mPokemonApi = mRetrofit.create(PokemonService.class);
+        mPokemonApi = new PokemonApi();
 
         showLoading(true);
 
@@ -90,22 +74,19 @@ public class ListPokemonActivityFragment extends Fragment {
             }
         });
 
-
-
-
         mRecyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener((LinearLayoutManager) mLayoutManager) {
             @Override
             public void onLoadMore(int page) {
                 mPokemonApi.list(page*10,10).enqueue(new Callback<PokemonResponseList>() {
                     @Override
                     public void onResponse(Call<PokemonResponseList> call, Response<PokemonResponseList> response) {
-                        Log.i("call", call.request().toString());
+                        Log.i("onResponse", call.request().toString());
                         updateList(response.body().getResults());
                     }
 
                     @Override
                     public void onFailure(Call<PokemonResponseList> call, Throwable t) {
-                        Log.e("error", ""+call.request().body());
+                        Log.e("onFailure", ""+call.request().body());
                     }
                 });
             }

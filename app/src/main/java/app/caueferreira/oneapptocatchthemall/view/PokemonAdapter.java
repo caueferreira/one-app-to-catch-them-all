@@ -13,7 +13,7 @@ import java.util.List;
 
 import app.caueferreira.oneapptocatchthemall.R;
 import app.caueferreira.oneapptocatchthemall.activity.PokemonDetailActivity;
-import app.caueferreira.oneapptocatchthemall.api.PokemonResponse;
+import app.caueferreira.oneapptocatchthemall.data.entity.PokemonResponse;
 
 /**
  * Created by caueferreira on 8/18/16.

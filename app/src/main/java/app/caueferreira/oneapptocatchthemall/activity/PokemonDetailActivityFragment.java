@@ -15,22 +15,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.gson.FieldNamingPolicy;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import java.net.URL;
 
 import app.caueferreira.oneapptocatchthemall.R;
-import app.caueferreira.oneapptocatchthemall.api.PokemonService;
+import app.caueferreira.oneapptocatchthemall.data.network.api.PokemonApi;
 import app.caueferreira.oneapptocatchthemall.entity.Pokemon;
 import app.caueferreira.oneapptocatchthemall.view.MoveAdapter;
 import app.caueferreira.oneapptocatchthemall.view.StatsAdapter;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -40,8 +34,7 @@ public class PokemonDetailActivityFragment extends Fragment {
     public PokemonDetailActivityFragment() {
     }
 
-    private Retrofit mRetrofit;
-    private PokemonService mPokemonApi;
+    private PokemonApi mPokemonApi;
 
     private TextView mTxtName, mTxtNumber, mTxtType, mTxtType2;
     private ImageView mImgSprite;
@@ -83,16 +76,7 @@ public class PokemonDetailActivityFragment extends Fragment {
         mMoveAdapter = new MoveAdapter(getActivity());
         mStatsAdapter = new StatsAdapter(getActivity());
 
-        Gson gson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .create();
-
-        mRetrofit = new Retrofit.Builder()
-                .baseUrl("http://pokeapi.co/api/v2/")
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-
-        mPokemonApi = mRetrofit.create(PokemonService.class);
+        mPokemonApi = new PokemonApi();
         mMovesView.setAdapter(mMoveAdapter);
         mStatsView.setAdapter(mStatsAdapter);
 
@@ -101,7 +85,7 @@ public class PokemonDetailActivityFragment extends Fragment {
         mPokemonApi.get(position).enqueue(new Callback<Pokemon>() {
             @Override
             public void onResponse(Call<Pokemon> call, Response<Pokemon> response) {
-                Log.i("Pokemon", response.body().toString());
+                Log.i("onResponse", response.body().toString());
                 final Pokemon pokemon = response.body();
 
                 mTxtName.setText(pokemon.getName());
@@ -126,7 +110,7 @@ public class PokemonDetailActivityFragment extends Fragment {
 
             @Override
             public void onFailure(Call<Pokemon> call, Throwable t) {
-                Log.e("Pokemon", t.getLocalizedMessage());
+                Log.e("onFailure", t.getLocalizedMessage());
 
                 showLoading(false);
             }
