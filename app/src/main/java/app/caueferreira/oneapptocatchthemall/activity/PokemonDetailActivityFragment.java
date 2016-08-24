@@ -22,7 +22,7 @@ import com.google.gson.GsonBuilder;
 import java.net.URL;
 
 import app.caueferreira.oneapptocatchthemall.R;
-import app.caueferreira.oneapptocatchthemall.api.PokemonApiService;
+import app.caueferreira.oneapptocatchthemall.api.PokemonService;
 import app.caueferreira.oneapptocatchthemall.entity.Pokemon;
 import app.caueferreira.oneapptocatchthemall.view.MoveAdapter;
 import app.caueferreira.oneapptocatchthemall.view.StatsAdapter;
@@ -41,7 +41,7 @@ public class PokemonDetailActivityFragment extends Fragment {
     }
 
     private Retrofit mRetrofit;
-    private PokemonApiService mPokemonApi;
+    private PokemonService mPokemonApi;
 
     private TextView mTxtName, mTxtNumber, mTxtType, mTxtType2;
     private ImageView mImgSprite;
@@ -92,7 +92,7 @@ public class PokemonDetailActivityFragment extends Fragment {
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
-        mPokemonApi = mRetrofit.create(PokemonApiService.class);
+        mPokemonApi = mRetrofit.create(PokemonService.class);
         mMovesView.setAdapter(mMoveAdapter);
         mStatsView.setAdapter(mStatsAdapter);
 

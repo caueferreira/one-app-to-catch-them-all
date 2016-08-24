@@ -17,7 +17,7 @@ import com.google.gson.GsonBuilder;
 import java.util.List;
 
 import app.caueferreira.oneapptocatchthemall.R;
-import app.caueferreira.oneapptocatchthemall.api.PokemonApiService;
+import app.caueferreira.oneapptocatchthemall.api.PokemonService;
 import app.caueferreira.oneapptocatchthemall.api.PokemonResponse;
 import app.caueferreira.oneapptocatchthemall.api.PokemonResponseList;
 import app.caueferreira.oneapptocatchthemall.view.EndlessRecyclerOnScrollListener;
@@ -40,7 +40,7 @@ public class ListPokemonActivityFragment extends Fragment {
     private PokemonAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private Retrofit mRetrofit;
-    private PokemonApiService mPokemonApi;
+    private PokemonService mPokemonApi;
 
     private ProgressDialog mProgress;
 
@@ -69,7 +69,7 @@ public class ListPokemonActivityFragment extends Fragment {
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
-        mPokemonApi = mRetrofit.create(PokemonApiService.class);
+        mPokemonApi = mRetrofit.create(PokemonService.class);
 
         showLoading(true);
 

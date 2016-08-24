@@ -10,7 +10,7 @@ import retrofit2.http.Query;
  * Created by caueferreira on 8/18/16.
  */
 
-public interface PokemonApiService {
+public interface PokemonService {
 
         @GET("pokemon")
         Call<PokemonResponseList> list();
