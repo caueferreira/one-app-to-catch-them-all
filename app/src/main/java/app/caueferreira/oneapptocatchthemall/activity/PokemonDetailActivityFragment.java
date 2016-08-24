@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import java.net.URL;
 
+import app.caueferreira.oneapptocatchthemall.AndroidApplication;
 import app.caueferreira.oneapptocatchthemall.R;
 import app.caueferreira.oneapptocatchthemall.data.repository.Pokedex;
 import app.caueferreira.oneapptocatchthemall.entity.Pokemon;
@@ -76,7 +77,7 @@ public class PokemonDetailActivityFragment extends Fragment {
         mMoveAdapter = new MoveAdapter(getActivity());
         mStatsAdapter = new StatsAdapter(getActivity());
 
-        mPokedex = new Pokedex();
+        mPokedex = ((AndroidApplication)getActivity().getApplication()).getApplicationComponent().providePokedex();
         mMovesView.setAdapter(mMoveAdapter);
         mStatsView.setAdapter(mStatsAdapter);
 

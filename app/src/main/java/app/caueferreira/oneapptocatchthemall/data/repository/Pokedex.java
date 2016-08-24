@@ -1,5 +1,8 @@
 package app.caueferreira.oneapptocatchthemall.data.repository;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import app.caueferreira.oneapptocatchthemall.data.entity.PokemonResponseList;
 import app.caueferreira.oneapptocatchthemall.data.network.api.PokemonApi;
 import app.caueferreira.oneapptocatchthemall.entity.Pokemon;
@@ -11,8 +14,10 @@ import rx.Observable;
 
 public class Pokedex {
 
+    @Singleton
     private PokemonApi pokemonApi;
 
+    @Inject
     public Pokedex(){
         pokemonApi = new PokemonApi();
     }

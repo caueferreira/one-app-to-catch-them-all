@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
+import app.caueferreira.oneapptocatchthemall.AndroidApplication;
 import app.caueferreira.oneapptocatchthemall.R;
 import app.caueferreira.oneapptocatchthemall.data.entity.PokemonResponse;
 import app.caueferreira.oneapptocatchthemall.data.entity.PokemonResponseList;
@@ -53,8 +54,7 @@ public class ListPokemonActivityFragment extends Fragment {
         mAdapter = new PokemonAdapter(getActivity());
         mRecyclerView.setAdapter(mAdapter);
 
-        mPokedex = new Pokedex();
-
+        mPokedex = ((AndroidApplication)getActivity().getApplication()).getApplicationComponent().providePokedex();
         showLoading(true);
 
         mPokedex.list()
