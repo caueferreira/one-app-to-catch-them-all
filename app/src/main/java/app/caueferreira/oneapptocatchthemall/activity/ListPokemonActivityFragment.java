@@ -1,5 +1,6 @@
 package app.caueferreira.oneapptocatchthemall.activity;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -41,6 +42,8 @@ public class ListPokemonActivityFragment extends Fragment {
     private Retrofit mRetrofit;
     private PokemonApiService mPokemonApi;
 
+    private ProgressDialog mProgress;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -68,16 +71,22 @@ public class ListPokemonActivityFragment extends Fragment {
 
         mPokemonApi = mRetrofit.create(PokemonApiService.class);
 
+        showLoading(true);
+
         mPokemonApi.list().enqueue(new Callback<PokemonResponseList>() {
             @Override
             public void onResponse(Call<PokemonResponseList> call, Response<PokemonResponseList> response) {
                 Log.i("onResponse",response.body().getResults().toString());
                 updateList(response.body().getResults());
+
+                showLoading(false);
             }
 
             @Override
             public void onFailure(Call<PokemonResponseList> call, Throwable t) {
                 Log.e("onFailure",t.toString());
+
+                showLoading(false);
             }
         });
 
@@ -107,7 +116,18 @@ public class ListPokemonActivityFragment extends Fragment {
         return view;
     }
 
-    public void updateList(final List<PokemonResponse> list) {
+    private void showLoading(final boolean toggle) {
+        if (toggle) {
+            mProgress = new ProgressDialog(getActivity());
+            mProgress.setTitle("Loading");
+            mProgress.setMessage("Retrieving pokemon list...");
+            mProgress.show();
+        } else {
+            mProgress.dismiss();
+        }
+    }
+
+    private void updateList(final List<PokemonResponse> list) {
         mAdapter.addAll(list, getActivity());
         mRecyclerView.getAdapter().notifyDataSetChanged();
     }

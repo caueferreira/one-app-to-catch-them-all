@@ -1,5 +1,6 @@
 package app.caueferreira.oneapptocatchthemall.activity;
 
+import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -53,6 +54,8 @@ public class PokemonDetailActivityFragment extends Fragment {
     private StatsAdapter mStatsAdapter;
     private RecyclerView.LayoutManager mLayoutManager2;
 
+    private ProgressDialog mProgress;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -93,6 +96,8 @@ public class PokemonDetailActivityFragment extends Fragment {
         mMovesView.setAdapter(mMoveAdapter);
         mStatsView.setAdapter(mStatsAdapter);
 
+        showLoading(true);
+
         mPokemonApi.get(position).enqueue(new Callback<Pokemon>() {
             @Override
             public void onResponse(Call<Pokemon> call, Response<Pokemon> response) {
@@ -103,7 +108,7 @@ public class PokemonDetailActivityFragment extends Fragment {
                 mTxtNumber.setText(String.valueOf(position));
                 mTxtType.setText(pokemon.getTypes().get(0).getType().getName());
 
-                if(pokemon.getTypes().size()>1)
+                if (pokemon.getTypes().size() > 1)
                     mTxtType2.setText(pokemon.getTypes().get(1).getType().getName());
                 else
                     mTxtType2.setVisibility(View.INVISIBLE);
@@ -115,11 +120,15 @@ public class PokemonDetailActivityFragment extends Fragment {
                 mStatsView.getAdapter().notifyDataSetChanged();
 
                 loadSprite(pokemon);
+
+                showLoading(false);
             }
 
             @Override
             public void onFailure(Call<Pokemon> call, Throwable t) {
                 Log.e("Pokemon", t.getLocalizedMessage());
+
+                showLoading(false);
             }
         });
 
@@ -130,6 +139,16 @@ public class PokemonDetailActivityFragment extends Fragment {
         new RetrieveSpriteTask().execute(pokemon);
     }
 
+    private void showLoading(final boolean toggle) {
+        if (toggle) {
+            mProgress = new ProgressDialog(getActivity());
+            mProgress.setTitle("Loading");
+            mProgress.setMessage("Retrieving pokemon detail...");
+            mProgress.show();
+        } else {
+            mProgress.dismiss();
+        }
+    }
 
     private class RetrieveSpriteTask extends AsyncTask<Pokemon, Void, Bitmap> {
 
@@ -148,7 +167,7 @@ public class PokemonDetailActivityFragment extends Fragment {
         }
 
         @Override
-        protected void onPostExecute(Bitmap bitmap){
+        protected void onPostExecute(Bitmap bitmap) {
             mImgSprite.setImageBitmap(bitmap);
         }
     }
