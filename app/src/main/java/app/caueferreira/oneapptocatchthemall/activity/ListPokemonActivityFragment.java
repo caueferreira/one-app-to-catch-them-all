@@ -18,9 +18,9 @@ import app.caueferreira.oneapptocatchthemall.data.entity.PokemonResponseList;
 import app.caueferreira.oneapptocatchthemall.data.network.api.PokemonApi;
 import app.caueferreira.oneapptocatchthemall.view.EndlessRecyclerOnScrollListener;
 import app.caueferreira.oneapptocatchthemall.view.PokemonAdapter;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -57,41 +57,50 @@ public class ListPokemonActivityFragment extends Fragment {
 
         showLoading(true);
 
-        mPokemonApi.list().enqueue(new Callback<PokemonResponseList>() {
-            @Override
-            public void onResponse(Call<PokemonResponseList> call, Response<PokemonResponseList> response) {
-                Log.i("onResponse",response.body().getResults().toString());
-                updateList(response.body().getResults());
+        mPokemonApi.list()
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<PokemonResponseList>() {
+                    @Override
+                    public void onCompleted() {
+                        showLoading(false);
+                    }
 
-                showLoading(false);
-            }
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e("onFailure", e.toString());
+                    }
 
-            @Override
-            public void onFailure(Call<PokemonResponseList> call, Throwable t) {
-                Log.e("onFailure",t.toString());
-
-                showLoading(false);
-            }
-        });
+                    @Override
+                    public void onNext(PokemonResponseList pokemonResponseList) {
+                        updateList(pokemonResponseList.getResults());
+                    }
+                });
 
         mRecyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener((LinearLayoutManager) mLayoutManager) {
             @Override
             public void onLoadMore(int page) {
-                mPokemonApi.list(page*10,10).enqueue(new Callback<PokemonResponseList>() {
-                    @Override
-                    public void onResponse(Call<PokemonResponseList> call, Response<PokemonResponseList> response) {
-                        Log.i("onResponse", call.request().toString());
-                        updateList(response.body().getResults());
-                    }
+                mPokemonApi.list(page * 10, 10)
+                        .subscribeOn(Schedulers.newThread())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Subscriber<PokemonResponseList>() {
+                            @Override
+                            public void onCompleted() {
+                                showLoading(false);
+                            }
 
-                    @Override
-                    public void onFailure(Call<PokemonResponseList> call, Throwable t) {
-                        Log.e("onFailure", ""+call.request().body());
-                    }
-                });
+                            @Override
+                            public void onError(Throwable e) {
+                                Log.e("onFailure", e.toString());
+                            }
+
+                            @Override
+                            public void onNext(PokemonResponseList pokemonResponseList) {
+                                updateList(pokemonResponseList.getResults());
+                            }
+                        });
             }
         });
-
 
 
         return view;

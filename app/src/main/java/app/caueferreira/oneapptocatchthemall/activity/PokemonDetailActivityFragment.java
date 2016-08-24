@@ -22,9 +22,9 @@ import app.caueferreira.oneapptocatchthemall.data.network.api.PokemonApi;
 import app.caueferreira.oneapptocatchthemall.entity.Pokemon;
 import app.caueferreira.oneapptocatchthemall.view.MoveAdapter;
 import app.caueferreira.oneapptocatchthemall.view.StatsAdapter;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -82,39 +82,42 @@ public class PokemonDetailActivityFragment extends Fragment {
 
         showLoading(true);
 
-        mPokemonApi.get(position).enqueue(new Callback<Pokemon>() {
-            @Override
-            public void onResponse(Call<Pokemon> call, Response<Pokemon> response) {
-                Log.i("onResponse", response.body().toString());
-                final Pokemon pokemon = response.body();
+        mPokemonApi.get(position)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Pokemon>() {
+                    @Override
+                    public void onCompleted() {
+                        showLoading(false);
 
-                mTxtName.setText(pokemon.getName());
-                mTxtNumber.setText(String.valueOf(position));
-                mTxtType.setText(pokemon.getTypes().get(0).getType().getName());
+                    }
 
-                if (pokemon.getTypes().size() > 1)
-                    mTxtType2.setText(pokemon.getTypes().get(1).getType().getName());
-                else
-                    mTxtType2.setVisibility(View.INVISIBLE);
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e("onFailure", e.getLocalizedMessage());
+                    }
 
-                mMoveAdapter.addAll(pokemon.getMoves(), getActivity());
-                mMovesView.getAdapter().notifyDataSetChanged();
+                    @Override
+                    public void onNext(Pokemon pokemon) {
 
-                mStatsAdapter.addAll(pokemon.getStats(), getActivity());
-                mStatsView.getAdapter().notifyDataSetChanged();
+                        mTxtName.setText(pokemon.getName());
+                        mTxtNumber.setText(String.valueOf(position));
+                        mTxtType.setText(pokemon.getTypes().get(0).getType().getName());
 
-                loadSprite(pokemon);
+                        if (pokemon.getTypes().size() > 1)
+                            mTxtType2.setText(pokemon.getTypes().get(1).getType().getName());
+                        else
+                            mTxtType2.setVisibility(View.INVISIBLE);
 
-                showLoading(false);
-            }
+                        mMoveAdapter.addAll(pokemon.getMoves(), getActivity());
+                        mMovesView.getAdapter().notifyDataSetChanged();
 
-            @Override
-            public void onFailure(Call<Pokemon> call, Throwable t) {
-                Log.e("onFailure", t.getLocalizedMessage());
+                        mStatsAdapter.addAll(pokemon.getStats(), getActivity());
+                        mStatsView.getAdapter().notifyDataSetChanged();
 
-                showLoading(false);
-            }
-        });
+                        loadSprite(pokemon);
+                    }
+                });
 
         return view;
     }
