@@ -10,12 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.List;
-
 import app.caueferreira.oneapptocatchthemall.AndroidApplication;
 import app.caueferreira.oneapptocatchthemall.R;
-import app.caueferreira.oneapptocatchthemall.data.entity.PokemonResponse;
-import app.caueferreira.oneapptocatchthemall.data.entity.PokemonResponseList;
 import app.caueferreira.oneapptocatchthemall.data.repository.Pokedex;
 import app.caueferreira.oneapptocatchthemall.view.EndlessRecyclerOnScrollListener;
 import app.caueferreira.oneapptocatchthemall.view.PokemonAdapter;
@@ -60,10 +56,11 @@ public class ListPokemonActivityFragment extends Fragment {
         mPokedex.list()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<PokemonResponseList>() {
+                .subscribe(new Subscriber<String>() {
                     @Override
                     public void onCompleted() {
                         showLoading(false);
+                        mRecyclerView.getAdapter().notifyDataSetChanged();
                     }
 
                     @Override
@@ -72,8 +69,8 @@ public class ListPokemonActivityFragment extends Fragment {
                     }
 
                     @Override
-                    public void onNext(PokemonResponseList pokemonResponseList) {
-                        updateList(pokemonResponseList.getResults());
+                    public void onNext(String pokemonName) {
+                        mAdapter.add(pokemonName);
                     }
                 });
 
@@ -83,10 +80,11 @@ public class ListPokemonActivityFragment extends Fragment {
                 mPokedex.list(page * 10, 10)
                         .subscribeOn(Schedulers.newThread())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Subscriber<PokemonResponseList>() {
+                        .subscribe(new Subscriber<String>() {
                             @Override
                             public void onCompleted() {
                                 showLoading(false);
+                                mRecyclerView.getAdapter().notifyDataSetChanged();
                             }
 
                             @Override
@@ -95,8 +93,8 @@ public class ListPokemonActivityFragment extends Fragment {
                             }
 
                             @Override
-                            public void onNext(PokemonResponseList pokemonResponseList) {
-                                updateList(pokemonResponseList.getResults());
+                            public void onNext(String pokemonName) {
+                                mAdapter.add(pokemonName);
                             }
                         });
             }
@@ -115,10 +113,5 @@ public class ListPokemonActivityFragment extends Fragment {
         } else {
             mProgress.dismiss();
         }
-    }
-
-    private void updateList(final List<PokemonResponse> list) {
-        mAdapter.addAll(list, getActivity());
-        mRecyclerView.getAdapter().notifyDataSetChanged();
     }
 }

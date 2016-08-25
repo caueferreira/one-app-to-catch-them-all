@@ -3,9 +3,9 @@ package app.caueferreira.oneapptocatchthemall.data.repository;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import app.caueferreira.oneapptocatchthemall.data.entity.PokemonEntity;
-import app.caueferreira.oneapptocatchthemall.data.entity.PokemonResponseList;
+import app.caueferreira.oneapptocatchthemall.data.mapper.PokemonEntityMapper;
 import app.caueferreira.oneapptocatchthemall.data.network.api.PokemonApi;
+import app.caueferreira.oneapptocatchthemall.domain.entity.Pokemon;
 import rx.Observable;
 
 /**
@@ -16,22 +16,30 @@ public class Pokedex {
 
     @Singleton
     private PokemonApi pokemonApi;
+    @Singleton
+    PokemonEntityMapper pokemonEntityMapper;
 
     @Inject
-    public Pokedex(){
+    public Pokedex() {
         pokemonApi = new PokemonApi();
+        pokemonEntityMapper = new PokemonEntityMapper();
     }
 
-    public Observable<PokemonResponseList> list(){
-        return pokemonApi.list();
+    public Observable<String> list() {
+        return pokemonApi.list()
+                .flatMap(pokemonResponseList -> Observable.from(pokemonResponseList.getResults())
+                        .flatMap(pokemonResponse -> Observable.just(pokemonResponse.getName())));
     }
 
-    public Observable<PokemonResponseList> list(final int offset, final int limit){
-        return pokemonApi.list(offset, limit);
+    public Observable<String> list(final int offset, final int limit) {
+        return pokemonApi.list(offset, limit)
+                .flatMap(pokemonResponseList -> Observable.from(pokemonResponseList.getResults())
+                        .flatMap(pokemonResponse -> Observable.just(pokemonResponse.getName())));
     }
 
-    public Observable<PokemonEntity> get(final int id){
-        return pokemonApi.get(id);
+    public Observable<Pokemon> get(final int id) {
+        return pokemonApi.get(id)
+                .flatMap(pokemonEntity -> Observable.just(pokemonEntityMapper.transform(pokemonEntity)));
     }
 
 }

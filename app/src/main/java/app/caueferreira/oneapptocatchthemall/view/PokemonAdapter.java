@@ -13,14 +13,13 @@ import java.util.List;
 
 import app.caueferreira.oneapptocatchthemall.R;
 import app.caueferreira.oneapptocatchthemall.activity.PokemonDetailActivity;
-import app.caueferreira.oneapptocatchthemall.data.entity.PokemonResponse;
 
 /**
  * Created by caueferreira on 8/18/16.
  */
 
 public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.ViewHolder> {
-    private List<PokemonResponse> mPokemons;
+    private List<String> mPokemons;
     private Activity mActivity;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -39,13 +38,12 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.ViewHold
         mActivity = activity;
     }
 
-    public PokemonAdapter addAll(final List<PokemonResponse> pokemons, final Activity activity) {
-        this.mPokemons.addAll(pokemons);
-        mActivity = activity;
-        return this;
+
+    public void add(final String pokemonName) {
+        this.mPokemons.add(pokemonName);
     }
 
-    public PokemonAdapter(final List<PokemonResponse> pokemons) {
+    public PokemonAdapter(final List<String> pokemons) {
         this.mPokemons = pokemons;
     }
 
@@ -61,7 +59,7 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        holder.mTxtPokemonName.setText(mPokemons.get(position).getName());
+        holder.mTxtPokemonName.setText(mPokemons.get(position));
         holder.mTxtPokemonNumber.setText(String.valueOf(position + 1));
 
         holder.itemView.setOnClickListener(v -> {

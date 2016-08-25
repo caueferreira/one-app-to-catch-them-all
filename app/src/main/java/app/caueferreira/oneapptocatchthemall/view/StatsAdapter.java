@@ -11,14 +11,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import app.caueferreira.oneapptocatchthemall.R;
-import app.caueferreira.oneapptocatchthemall.data.entity.StatsEntity;
+import app.caueferreira.oneapptocatchthemall.domain.entity.Stats;
 
 /**
  * Created by caueferreira on 8/22/16.
  */
 
 public class StatsAdapter extends RecyclerView.Adapter<StatsAdapter.ViewHolder> {
-    private List<StatsEntity> mStats;
+    private List<Stats> mStats;
     private Activity mActivity;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -37,13 +37,13 @@ public class StatsAdapter extends RecyclerView.Adapter<StatsAdapter.ViewHolder> 
         mActivity = activity;
     }
 
-    public StatsAdapter addAll(final List<StatsEntity> stats, final Activity activity) {
+    public StatsAdapter addAll(final List<Stats> stats, final Activity activity) {
         this.mStats.addAll(stats);
         mActivity = activity;
         return this;
     }
 
-    public StatsAdapter(final List<StatsEntity> stats) {
+    public StatsAdapter(final List<Stats> stats) {
         this.mStats = stats;
     }
 
@@ -59,8 +59,8 @@ public class StatsAdapter extends RecyclerView.Adapter<StatsAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(StatsAdapter.ViewHolder holder, int position) {
-        holder.mTxtName.setText(mStats.get(position).getStat().getName());
-        holder.mTxtValue.setText(String.valueOf(mStats.get(position).getBaseStat()));
+        holder.mTxtName.setText(mStats.get(position).getName());
+        holder.mTxtValue.setText(String.valueOf(mStats.get(position).getValue()));
     }
 
     @Override

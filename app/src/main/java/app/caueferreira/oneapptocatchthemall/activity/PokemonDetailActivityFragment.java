@@ -21,6 +21,7 @@ import app.caueferreira.oneapptocatchthemall.AndroidApplication;
 import app.caueferreira.oneapptocatchthemall.R;
 import app.caueferreira.oneapptocatchthemall.data.entity.PokemonEntity;
 import app.caueferreira.oneapptocatchthemall.data.repository.Pokedex;
+import app.caueferreira.oneapptocatchthemall.domain.entity.Pokemon;
 import app.caueferreira.oneapptocatchthemall.view.MoveAdapter;
 import app.caueferreira.oneapptocatchthemall.view.StatsAdapter;
 import rx.Subscriber;
@@ -86,7 +87,7 @@ public class PokemonDetailActivityFragment extends Fragment {
         mPokedex.get(position)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<PokemonEntity>() {
+                .subscribe(new Subscriber<Pokemon>() {
                     @Override
                     public void onCompleted() {
                         showLoading(false);
@@ -99,14 +100,14 @@ public class PokemonDetailActivityFragment extends Fragment {
                     }
 
                     @Override
-                    public void onNext(PokemonEntity pokemon) {
+                    public void onNext(Pokemon pokemon) {
 
                         mTxtName.setText(pokemon.getName());
                         mTxtNumber.setText(String.valueOf(position));
-                        mTxtType.setText(pokemon.getTypes().get(0).getType().getName());
+                        mTxtType.setText(pokemon.getTypes().get(0).getName());
 
                         if (pokemon.getTypes().size() > 1)
-                            mTxtType2.setText(pokemon.getTypes().get(1).getType().getName());
+                            mTxtType2.setText(pokemon.getTypes().get(1).getName());
                         else
                             mTxtType2.setVisibility(View.INVISIBLE);
 
@@ -123,7 +124,7 @@ public class PokemonDetailActivityFragment extends Fragment {
         return view;
     }
 
-    private void loadSprite(final PokemonEntity pokemon) {
+    private void loadSprite(final Pokemon pokemon) {
         new RetrieveSpriteTask().execute(pokemon);
     }
 
@@ -138,14 +139,14 @@ public class PokemonDetailActivityFragment extends Fragment {
         }
     }
 
-    private class RetrieveSpriteTask extends AsyncTask<PokemonEntity, Void, Bitmap> {
+    private class RetrieveSpriteTask extends AsyncTask<Pokemon, Void, Bitmap> {
 
         @Override
-        protected Bitmap doInBackground(PokemonEntity... pokemons) {
+        protected Bitmap doInBackground(Pokemon... pokemons) {
 
             URL url = null;
             try {
-                url = new URL(pokemons[0].getSpripes().getFrontDefault());
+                url = new URL(pokemons[0].getSprite());
                 Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
                 return bmp;
             } catch (Exception e) {

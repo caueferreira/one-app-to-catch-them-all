@@ -11,14 +11,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import app.caueferreira.oneapptocatchthemall.R;
-import app.caueferreira.oneapptocatchthemall.data.entity.MoveEntity;
+import app.caueferreira.oneapptocatchthemall.domain.entity.Move;
 
 /**
  * Created by caueferreira on 8/21/16.
  */
 
 public class MoveAdapter extends RecyclerView.Adapter<MoveAdapter.ViewHolder> {
-    private List<MoveEntity> mMoves;
+    private List<Move> mMoves;
     private Activity mActivity;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -35,13 +35,13 @@ public class MoveAdapter extends RecyclerView.Adapter<MoveAdapter.ViewHolder> {
         mActivity = activity;
     }
 
-    public MoveAdapter addAll(final List<MoveEntity> moves, final Activity activity) {
+    public MoveAdapter addAll(final List<Move> moves, final Activity activity) {
         this.mMoves.addAll(moves);
         mActivity = activity;
         return this;
     }
 
-    public MoveAdapter(final List<MoveEntity> moves) {
+    public MoveAdapter(final List<Move> moves) {
         this.mMoves = moves;
     }
 
@@ -57,7 +57,7 @@ public class MoveAdapter extends RecyclerView.Adapter<MoveAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(MoveAdapter.ViewHolder holder, int position) {
-        holder.mTxtMove.setText(mMoves.get(position).getMove().getName());
+        holder.mTxtMove.setText(mMoves.get(position).getName());
     }
 
     @Override
