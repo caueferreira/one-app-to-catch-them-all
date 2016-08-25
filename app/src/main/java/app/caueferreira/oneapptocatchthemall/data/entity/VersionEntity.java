@@ -1,9 +1,10 @@
-package app.caueferreira.oneapptocatchthemall.entity;
+package app.caueferreira.oneapptocatchthemall.data.entity;
 
 /**
  * Created by caueferreira on 8/18/16.
  */
-public class Species {
+
+public class VersionEntity {
 
     private String name, url;
 
@@ -17,7 +18,7 @@ public class Species {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("Species{");
+        final StringBuilder sb = new StringBuilder("Version{");
         sb.append("name='").append(name).append('\'');
         sb.append(", url='").append(url).append('\'');
         sb.append('}');

@@ -11,14 +11,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import app.caueferreira.oneapptocatchthemall.R;
-import app.caueferreira.oneapptocatchthemall.entity.Stats;
+import app.caueferreira.oneapptocatchthemall.data.entity.StatsEntity;
 
 /**
  * Created by caueferreira on 8/22/16.
  */
 
 public class StatsAdapter extends RecyclerView.Adapter<StatsAdapter.ViewHolder> {
-    private List<Stats> mStats;
+    private List<StatsEntity> mStats;
     private Activity mActivity;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -37,13 +37,13 @@ public class StatsAdapter extends RecyclerView.Adapter<StatsAdapter.ViewHolder> 
         mActivity = activity;
     }
 
-    public StatsAdapter addAll(final List<Stats> stats, final Activity activity) {
+    public StatsAdapter addAll(final List<StatsEntity> stats, final Activity activity) {
         this.mStats.addAll(stats);
         mActivity = activity;
         return this;
     }
 
-    public StatsAdapter(final List<Stats> stats) {
+    public StatsAdapter(final List<StatsEntity> stats) {
         this.mStats = stats;
     }
 

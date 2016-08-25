@@ -1,4 +1,4 @@
-package app.caueferreira.oneapptocatchthemall.entity;
+package app.caueferreira.oneapptocatchthemall.data.entity;
 
 import java.util.List;
 
@@ -6,20 +6,20 @@ import java.util.List;
  * Created by caueferreira on 8/18/16.
  */
 
-public class Pokemon {
+public class PokemonEntity {
 
     private int id, baseExperience, height, order, weight;
     private String name;
-    private List<Ability> abilities;
-    private List<Form> forms;
-    private List<GameIndex> gameIndices;
-    private List<Item> heldItems;
-    private List<Stats.LocationAreaEncounters> locationAreaEncounterses;
-    private List<Move> moves;
-    private Species species;
-    private Sprites sprites;
-    private List<Stats> stats;
-    private List<Type> types;
+    private List<AbilityEntity> abilities;
+    private List<FormEntity> forms;
+    private List<GameIndexEntity> gameIndices;
+    private List<ItemEntity> heldItems;
+    private List<StatsEntity.LocationAreaEncountersEntity> locationAreaEncounterses;
+    private List<MoveEntity> moves;
+    private SpeciesEntity species;
+    private SpritesEntity sprites;
+    private List<StatsEntity> stats;
+    private List<TypeEntity> types;
 
     public int getId() {
         return id;
@@ -45,43 +45,43 @@ public class Pokemon {
         return name;
     }
 
-    public List<Ability> getAbilities() {
+    public List<AbilityEntity> getAbilities() {
         return abilities;
     }
 
-    public List<Form> getForms() {
+    public List<FormEntity> getForms() {
         return forms;
     }
 
-    public List<GameIndex> getGameIndices() {
+    public List<GameIndexEntity> getGameIndices() {
         return gameIndices;
     }
 
-    public List<Item> getHeldItems() {
+    public List<ItemEntity> getHeldItems() {
         return heldItems;
     }
 
-    public List<Stats.LocationAreaEncounters> getLocationAreaEncounterses() {
+    public List<StatsEntity.LocationAreaEncountersEntity> getLocationAreaEncounterses() {
         return locationAreaEncounterses;
     }
 
-    public List<Move> getMoves() {
+    public List<MoveEntity> getMoves() {
         return moves;
     }
 
-    public Species getSpecies() {
+    public SpeciesEntity getSpecies() {
         return species;
     }
 
-    public Sprites getSpripes() {
+    public SpritesEntity getSpripes() {
         return sprites;
     }
 
-    public List<Stats> getStats() {
+    public List<StatsEntity> getStats() {
         return stats;
     }
 
-    public List<Type> getTypes() {
+    public List<TypeEntity> getTypes() {
         return types;
     }
 

@@ -1,16 +1,16 @@
-package app.caueferreira.oneapptocatchthemall.entity;
+package app.caueferreira.oneapptocatchthemall.data.entity;
 
 import java.util.List;
 
 /**
  * Created by caueferreira on 8/18/16.
  */
-public class Stats {
+public class StatsEntity {
 
     private int baseStat, effort;
-    private StatsDetail stat;
+    private StatsDetailEntity stat;
 
-    public class StatsDetail {
+    public class StatsDetailEntity {
 
         private String name, url;
 
@@ -35,30 +35,30 @@ public class Stats {
     /**
      * Created by caueferreira on 8/18/16.
      */
-    public static class LocationAreaEncounters {
+    public static class LocationAreaEncountersEntity {
 
-        private LocationArea locationArea;
-        private VersionDetails versionDetails;
+        private LocationAreaEntity locationArea;
+        private VersionDetailsEntity versionDetails;
 
-        private class LocationArea {
+        private class LocationAreaEntity {
 
             private String name, url;
         }
 
-        private class VersionDetails {
+        private class VersionDetailsEntity {
 
             private int maxChance;
-            private List<EncounterDetail> encounterDetails;
-            private Version version;
+            private List<EncounterDetailEntity> encounterDetails;
+            private VersionEntity version;
 
 
-            private class EncounterDetail {
+            private class EncounterDetailEntity {
 
                 private int minLevel, maxLevel, chance;
-                private List<ConditionValue> conditionValues;
-                private Method method;
+                private List<ConditionValueEntity> conditionValues;
+                private MethodEntity method;
 
-                private class ConditionValue {
+                private class ConditionValueEntity {
 
                     private String name, url;
 
@@ -80,7 +80,7 @@ public class Stats {
                     }
                 }
 
-                private class Method {
+                private class MethodEntity {
 
                     private String name, url;
 
@@ -114,11 +114,11 @@ public class Stats {
                     return chance;
                 }
 
-                public List<ConditionValue> getConditionValues() {
+                public List<ConditionValueEntity> getConditionValues() {
                     return conditionValues;
                 }
 
-                public Method getMethod() {
+                public MethodEntity getMethod() {
                     return method;
                 }
 
@@ -136,11 +136,11 @@ public class Stats {
             }
         }
 
-        public LocationArea getLocationArea() {
+        public LocationAreaEntity getLocationArea() {
             return locationArea;
         }
 
-        public VersionDetails getVersionDetails() {
+        public VersionDetailsEntity getVersionDetails() {
             return versionDetails;
         }
 
@@ -162,7 +162,7 @@ public class Stats {
         return effort;
     }
 
-    public StatsDetail getStat() {
+    public StatsDetailEntity getStat() {
         return stat;
     }
 

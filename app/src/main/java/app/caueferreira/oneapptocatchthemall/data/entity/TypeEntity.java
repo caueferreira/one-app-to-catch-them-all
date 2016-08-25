@@ -1,14 +1,14 @@
-package app.caueferreira.oneapptocatchthemall.entity;
+package app.caueferreira.oneapptocatchthemall.data.entity;
 
 /**
  * Created by caueferreira on 8/18/16.
  */
-public class Type {
+public class TypeEntity {
 
     private int slot;
-    private TypeDetail type;
+    private TypeDetailEntity type;
 
-    public class TypeDetail {
+    public class TypeDetailEntity {
 
         private String name, url;
 
@@ -34,7 +34,7 @@ public class Type {
         return slot;
     }
 
-    public TypeDetail getType() {
+    public TypeDetailEntity getType() {
         return type;
     }
 

@@ -1,9 +1,9 @@
-package app.caueferreira.oneapptocatchthemall.entity;
+package app.caueferreira.oneapptocatchthemall.data.entity;
 
 /**
  * Created by caueferreira on 8/18/16.
  */
-public class Sprites {
+public class SpritesEntity {
 
     private String backFemale, backShinyFemale, backDefault, frontFemale, frontShinyFemale, backShiny, frontDefault, frontShiny;
 

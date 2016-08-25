@@ -1,9 +1,9 @@
-package app.caueferreira.oneapptocatchthemall.entity;
+package app.caueferreira.oneapptocatchthemall.data.entity;
 
 /**
  * Created by caueferreira on 8/18/16.
  */
-public class Form {
+public class SpeciesEntity {
 
     private String name, url;
 
@@ -17,7 +17,7 @@ public class Form {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("Form{");
+        final StringBuilder sb = new StringBuilder("Species{");
         sb.append("name='").append(name).append('\'');
         sb.append(", url='").append(url).append('\'');
         sb.append('}');

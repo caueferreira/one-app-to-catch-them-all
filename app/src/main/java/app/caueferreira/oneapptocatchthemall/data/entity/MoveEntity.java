@@ -1,16 +1,16 @@
-package app.caueferreira.oneapptocatchthemall.entity;
+package app.caueferreira.oneapptocatchthemall.data.entity;
 
 import java.util.List;
 
 /**
  * Created by caueferreira on 8/18/16.
  */
-public class Move {
+public class MoveEntity {
 
-    private MoveDetail move;
-    private List<VersionGroupDetail> versionGroupDetails;
+    private MoveDetailEntity move;
+    private List<VersionGroupDetailEntity> versionGroupDetails;
 
-    public class MoveDetail {
+    public class MoveDetailEntity {
 
         private String name, url;
 
@@ -32,18 +32,18 @@ public class Move {
         }
     }
 
-    private class VersionGroupDetail {
+    private class VersionGroupDetailEntity {
 
         private int levelLearnedAt;
-        private VersionGroup versionGroup;
-        private MoveLearnMethod moveLearnMethod;
+        private VersionGroupEntity versionGroup;
+        private MoveLearnMethodEntity moveLearnMethod;
 
-        private class VersionGroup {
+        private class VersionGroupEntity {
 
             private String name, url;
         }
 
-        private class MoveLearnMethod {
+        private class MoveLearnMethodEntity {
 
             private String name, url;
 
@@ -69,11 +69,11 @@ public class Move {
             return levelLearnedAt;
         }
 
-        public VersionGroup getVersionGroup() {
+        public VersionGroupEntity getVersionGroup() {
             return versionGroup;
         }
 
-        public MoveLearnMethod getMoveLearnMethod() {
+        public MoveLearnMethodEntity getMoveLearnMethod() {
             return moveLearnMethod;
         }
 
@@ -88,11 +88,11 @@ public class Move {
         }
     }
 
-    public MoveDetail getMove() {
+    public MoveDetailEntity getMove() {
         return move;
     }
 
-    public List<VersionGroupDetail> getVersionGroupDetails() {
+    public List<VersionGroupDetailEntity> getVersionGroupDetails() {
         return versionGroupDetails;
     }
 

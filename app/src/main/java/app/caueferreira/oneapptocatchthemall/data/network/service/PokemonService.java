@@ -1,7 +1,7 @@
 package app.caueferreira.oneapptocatchthemall.data.network.service;
 
+import app.caueferreira.oneapptocatchthemall.data.entity.PokemonEntity;
 import app.caueferreira.oneapptocatchthemall.data.entity.PokemonResponseList;
-import app.caueferreira.oneapptocatchthemall.entity.Pokemon;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -20,5 +20,5 @@ public interface PokemonService {
     Observable<PokemonResponseList> list(@Query("offset") int offset, @Query("limit") int limit);
 
     @GET("pokemon/{id}")
-    Observable<Pokemon> get(@Path("id") int id);
+    Observable<PokemonEntity> get(@Path("id") int id);
 }

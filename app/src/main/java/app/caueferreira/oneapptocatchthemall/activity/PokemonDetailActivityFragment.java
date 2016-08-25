@@ -19,8 +19,8 @@ import java.net.URL;
 
 import app.caueferreira.oneapptocatchthemall.AndroidApplication;
 import app.caueferreira.oneapptocatchthemall.R;
+import app.caueferreira.oneapptocatchthemall.data.entity.PokemonEntity;
 import app.caueferreira.oneapptocatchthemall.data.repository.Pokedex;
-import app.caueferreira.oneapptocatchthemall.entity.Pokemon;
 import app.caueferreira.oneapptocatchthemall.view.MoveAdapter;
 import app.caueferreira.oneapptocatchthemall.view.StatsAdapter;
 import rx.Subscriber;
@@ -86,7 +86,7 @@ public class PokemonDetailActivityFragment extends Fragment {
         mPokedex.get(position)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<Pokemon>() {
+                .subscribe(new Subscriber<PokemonEntity>() {
                     @Override
                     public void onCompleted() {
                         showLoading(false);
@@ -99,7 +99,7 @@ public class PokemonDetailActivityFragment extends Fragment {
                     }
 
                     @Override
-                    public void onNext(Pokemon pokemon) {
+                    public void onNext(PokemonEntity pokemon) {
 
                         mTxtName.setText(pokemon.getName());
                         mTxtNumber.setText(String.valueOf(position));
@@ -123,7 +123,7 @@ public class PokemonDetailActivityFragment extends Fragment {
         return view;
     }
 
-    private void loadSprite(final Pokemon pokemon) {
+    private void loadSprite(final PokemonEntity pokemon) {
         new RetrieveSpriteTask().execute(pokemon);
     }
 
@@ -138,10 +138,10 @@ public class PokemonDetailActivityFragment extends Fragment {
         }
     }
 
-    private class RetrieveSpriteTask extends AsyncTask<Pokemon, Void, Bitmap> {
+    private class RetrieveSpriteTask extends AsyncTask<PokemonEntity, Void, Bitmap> {
 
         @Override
-        protected Bitmap doInBackground(Pokemon... pokemons) {
+        protected Bitmap doInBackground(PokemonEntity... pokemons) {
 
             URL url = null;
             try {

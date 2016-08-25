@@ -3,9 +3,9 @@ package app.caueferreira.oneapptocatchthemall.data.network.api;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import app.caueferreira.oneapptocatchthemall.data.entity.PokemonEntity;
 import app.caueferreira.oneapptocatchthemall.data.entity.PokemonResponseList;
 import app.caueferreira.oneapptocatchthemall.data.network.service.PokemonService;
-import app.caueferreira.oneapptocatchthemall.entity.Pokemon;
 import rx.Observable;
 
 /**
@@ -30,7 +30,7 @@ public class PokemonApi extends BaseApi {
         return pokemonService.list(offset, limit);
     }
 
-    public Observable<Pokemon> get(final int id){
+    public Observable<PokemonEntity> get(final int id){
         return pokemonService.get(id);
     }
 }

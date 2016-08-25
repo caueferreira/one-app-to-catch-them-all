@@ -1,23 +1,23 @@
-package app.caueferreira.oneapptocatchthemall.entity;
+package app.caueferreira.oneapptocatchthemall.data.entity;
 
 /**
  * Created by caueferreira on 8/18/16.
  */
-public class GameIndex {
+public class GameIndexEntity {
 
 
     private String gameIndex;
-    private Version version;
+    private VersionEntity version;
 
     public String getGameIndex() {
         return gameIndex;
     }
 
-    public Version getVersion() {
+    public VersionEntity getVersion() {
         return version;
     }
 
-    public GameIndex(String gameIndex, Version version) {
+    public GameIndexEntity(String gameIndex, VersionEntity version) {
         this.gameIndex = gameIndex;
         this.version = version;
     }
