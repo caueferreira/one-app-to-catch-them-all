@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,26 +16,23 @@ import android.widget.TextView;
 
 import java.net.URL;
 
+import javax.inject.Inject;
+
 import app.caueferreira.oneapptocatchthemall.AndroidApplication;
 import app.caueferreira.oneapptocatchthemall.R;
-import app.caueferreira.oneapptocatchthemall.data.entity.PokemonEntity;
-import app.caueferreira.oneapptocatchthemall.data.repository.Pokedex;
 import app.caueferreira.oneapptocatchthemall.domain.entity.Pokemon;
+import app.caueferreira.oneapptocatchthemall.presentation.presenter.PokemonDetailPresenter;
+import app.caueferreira.oneapptocatchthemall.presentation.view.PokemonDetailView;
 import app.caueferreira.oneapptocatchthemall.view.MoveAdapter;
 import app.caueferreira.oneapptocatchthemall.view.StatsAdapter;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * A placeholder fragment containing a simple view.
  */
-public class PokemonDetailActivityFragment extends Fragment {
+public class PokemonDetailActivityFragment extends Fragment implements PokemonDetailView {
 
     public PokemonDetailActivityFragment() {
     }
-
-    private Pokedex mPokedex;
 
     private TextView mTxtName, mTxtNumber, mTxtType, mTxtType2;
     private ImageView mImgSprite;
@@ -51,12 +47,20 @@ public class PokemonDetailActivityFragment extends Fragment {
 
     private ProgressDialog mProgress;
 
+    @Inject
+    PokemonDetailPresenter pokemonDetailPresenter;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_pokemon_detail, container, false);
+        ((AndroidApplication) getActivity().getApplication()).getApplicationComponent().inject(this);
+
+        pokemonDetailPresenter.setView(this);
 
         final int position = getActivity().getIntent().getIntExtra("number", 0);
+
+        pokemonDetailPresenter.get(position);
 
         mTxtName = (TextView) view.findViewById(R.id.name);
         mTxtNumber = (TextView) view.findViewById(R.id.number);
@@ -78,48 +82,10 @@ public class PokemonDetailActivityFragment extends Fragment {
         mMoveAdapter = new MoveAdapter(getActivity());
         mStatsAdapter = new StatsAdapter(getActivity());
 
-        mPokedex = ((AndroidApplication)getActivity().getApplication()).getApplicationComponent().providePokedex();
         mMovesView.setAdapter(mMoveAdapter);
         mStatsView.setAdapter(mStatsAdapter);
 
-        showLoading(true);
-
-        mPokedex.get(position)
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<Pokemon>() {
-                    @Override
-                    public void onCompleted() {
-                        showLoading(false);
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.e("onFailure", e.getLocalizedMessage());
-                    }
-
-                    @Override
-                    public void onNext(Pokemon pokemon) {
-
-                        mTxtName.setText(pokemon.getName());
-                        mTxtNumber.setText(String.valueOf(position));
-                        mTxtType.setText(pokemon.getTypes().get(0).getName());
-
-                        if (pokemon.getTypes().size() > 1)
-                            mTxtType2.setText(pokemon.getTypes().get(1).getName());
-                        else
-                            mTxtType2.setVisibility(View.INVISIBLE);
-
-                        mMoveAdapter.addAll(pokemon.getMoves(), getActivity());
-                        mMovesView.getAdapter().notifyDataSetChanged();
-
-                        mStatsAdapter.addAll(pokemon.getStats(), getActivity());
-                        mStatsView.getAdapter().notifyDataSetChanged();
-
-                        loadSprite(pokemon);
-                    }
-                });
+        showLoading();
 
         return view;
     }
@@ -137,6 +103,36 @@ public class PokemonDetailActivityFragment extends Fragment {
         } else {
             mProgress.dismiss();
         }
+    }
+
+    @Override
+    public void renderPokemon(final Pokemon pokemon) {
+        mTxtName.setText(pokemon.getName());
+        mTxtNumber.setText(String.valueOf(pokemon.getNumber()));
+        mTxtType.setText(pokemon.getTypes().get(0).getName());
+
+        if (pokemon.getTypes().size() > 1)
+            mTxtType2.setText(pokemon.getTypes().get(1).getName());
+        else
+            mTxtType2.setVisibility(View.INVISIBLE);
+
+        mMoveAdapter.addAll(pokemon.getMoves(), getActivity());
+        mMovesView.getAdapter().notifyDataSetChanged();
+
+        mStatsAdapter.addAll(pokemon.getStats(), getActivity());
+        mStatsView.getAdapter().notifyDataSetChanged();
+
+        loadSprite(pokemon);
+    }
+
+    @Override
+    public void showLoading() {
+        showLoading(true);
+    }
+
+    @Override
+    public void hideLoading() {
+        showLoading(false);
     }
 
     private class RetrieveSpriteTask extends AsyncTask<Pokemon, Void, Bitmap> {

@@ -4,6 +4,7 @@ import javax.inject.Singleton;
 
 import app.caueferreira.oneapptocatchthemall.data.repository.Pokedex;
 import app.caueferreira.oneapptocatchthemall.domain.interactor.ListPokemonCase;
+import app.caueferreira.oneapptocatchthemall.domain.interactor.PokemonDetailCase;
 import dagger.Module;
 import dagger.Provides;
 
@@ -30,5 +31,11 @@ public class ApplicationModule {
     @Singleton
     ListPokemonCase provideListPokemonCase() {
         return new ListPokemonCase();
+    }
+
+    @Provides
+    @Singleton
+    PokemonDetailCase providePokemonDetailCase() {
+        return new PokemonDetailCase();
     }
 }
