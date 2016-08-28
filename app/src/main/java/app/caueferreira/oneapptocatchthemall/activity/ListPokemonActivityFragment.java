@@ -5,24 +5,23 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import javax.inject.Inject;
+
 import app.caueferreira.oneapptocatchthemall.AndroidApplication;
 import app.caueferreira.oneapptocatchthemall.R;
-import app.caueferreira.oneapptocatchthemall.data.repository.Pokedex;
+import app.caueferreira.oneapptocatchthemall.presentation.presenter.ListPokemonPresenter;
+import app.caueferreira.oneapptocatchthemall.presentation.view.ListPokemonView;
 import app.caueferreira.oneapptocatchthemall.view.EndlessRecyclerOnScrollListener;
 import app.caueferreira.oneapptocatchthemall.view.PokemonAdapter;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * A placeholder fragment containing a simple view.
  */
-public class ListPokemonActivityFragment extends Fragment {
+public class ListPokemonActivityFragment extends Fragment implements ListPokemonView {
 
     public ListPokemonActivityFragment() {
     }
@@ -30,15 +29,19 @@ public class ListPokemonActivityFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private PokemonAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private Pokedex mPokedex;
 
     private ProgressDialog mProgress;
+
+    @Inject
+    ListPokemonPresenter listPokemonPresenter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list_pokemon, container, false);
+        ((AndroidApplication) getActivity().getApplication()).getApplicationComponent().inject(this);
 
+        listPokemonPresenter.setView(this);
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.pokemon_list);
 
@@ -50,53 +53,14 @@ public class ListPokemonActivityFragment extends Fragment {
         mAdapter = new PokemonAdapter(getActivity());
         mRecyclerView.setAdapter(mAdapter);
 
-        mPokedex = ((AndroidApplication)getActivity().getApplication()).getApplicationComponent().providePokedex();
-        showLoading(true);
+        showLoading();
 
-        mPokedex.list()
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<String>() {
-                    @Override
-                    public void onCompleted() {
-                        showLoading(false);
-                        mRecyclerView.getAdapter().notifyDataSetChanged();
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.e("onFailure", e.toString());
-                    }
-
-                    @Override
-                    public void onNext(String pokemonName) {
-                        mAdapter.add(pokemonName);
-                    }
-                });
+        listPokemonPresenter.list(0, 10);
 
         mRecyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener((LinearLayoutManager) mLayoutManager) {
             @Override
             public void onLoadMore(int page) {
-                mPokedex.list(page * 10, 10)
-                        .subscribeOn(Schedulers.newThread())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Subscriber<String>() {
-                            @Override
-                            public void onCompleted() {
-                                showLoading(false);
-                                mRecyclerView.getAdapter().notifyDataSetChanged();
-                            }
-
-                            @Override
-                            public void onError(Throwable e) {
-                                Log.e("onFailure", e.toString());
-                            }
-
-                            @Override
-                            public void onNext(String pokemonName) {
-                                mAdapter.add(pokemonName);
-                            }
-                        });
+                listPokemonPresenter.list(10 * page, 10);
             }
         });
 
@@ -113,5 +77,26 @@ public class ListPokemonActivityFragment extends Fragment {
         } else {
             mProgress.dismiss();
         }
+    }
+
+    @Override
+    public void renderPokemonList() {
+        mRecyclerView.getAdapter().notifyDataSetChanged();
+
+    }
+
+    @Override
+    public void renderPokemon(final String pokemonName) {
+        mAdapter.add(pokemonName);
+    }
+
+    @Override
+    public void showLoading() {
+        showLoading(true);
+    }
+
+    @Override
+    public void hideLoading() {
+        showLoading(false);
     }
 }
