@@ -3,6 +3,7 @@ package app.caueferreira.oneapptocatchthemall;
 import javax.inject.Singleton;
 
 import app.caueferreira.oneapptocatchthemall.data.repository.Pokedex;
+import app.caueferreira.oneapptocatchthemall.domain.interactor.ListPokemonCase;
 import dagger.Module;
 import dagger.Provides;
 
@@ -23,5 +24,11 @@ public class ApplicationModule {
     @Singleton
     Pokedex providePokedex() {
         return new Pokedex();
+    }
+
+    @Provides
+    @Singleton
+    ListPokemonCase provideListPokemonCase() {
+        return new ListPokemonCase();
     }
 }
