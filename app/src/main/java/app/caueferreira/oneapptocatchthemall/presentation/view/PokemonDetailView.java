@@ -6,9 +6,7 @@ import app.caueferreira.oneapptocatchthemall.domain.entity.Pokemon;
  * Created by caueferreira on 8/28/16.
  */
 
-public interface PokemonDetailView {
+public interface PokemonDetailView extends BaseView{
 
     void renderPokemon(final Pokemon pokemon);
-    void showLoading();
-    void hideLoading();
 }

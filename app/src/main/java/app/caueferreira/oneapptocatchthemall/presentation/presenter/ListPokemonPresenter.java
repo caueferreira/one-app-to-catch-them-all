@@ -1,7 +1,6 @@
 package app.caueferreira.oneapptocatchthemall.presentation.presenter;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import javax.inject.Inject;
 
@@ -56,7 +55,6 @@ public class ListPokemonPresenter {
         }
 
         @Override public void onError(final Throwable e) {
-            Log.e("onError", e.toString());
             ListPokemonPresenter.this.hideLoading();
         }
 
