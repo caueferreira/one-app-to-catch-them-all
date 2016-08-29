@@ -1,4 +1,4 @@
-package app.caueferreira.oneapptocatchthemall.view;
+package app.caueferreira.oneapptocatchthemall.presentation.view.adapter;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import app.caueferreira.oneapptocatchthemall.R;
-import app.caueferreira.oneapptocatchthemall.activity.PokemonDetailActivity;
+import app.caueferreira.oneapptocatchthemall.presentation.view.activity.PokemonDetailActivity;
 
 /**
  * Created by caueferreira on 8/18/16.

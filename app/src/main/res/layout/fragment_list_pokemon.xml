@@ -5,7 +5,7 @@
     android:id="@+id/content_list_pokemon"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="app.caueferreira.oneapptocatchthemall.activity.ListPokemonActivityFragment"
+    tools:context="app.caueferreira.oneapptocatchthemall.presentation.view.fragment.ListPokemonActivityFragment"
     tools:showIn="@layout/activity_list_pokemon">
 
 

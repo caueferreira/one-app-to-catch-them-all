@@ -1,8 +1,7 @@
-package app.caueferreira.oneapptocatchthemall.activity;
+package app.caueferreira.oneapptocatchthemall.presentation.view.fragment;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,17 +10,16 @@ import android.view.ViewGroup;
 
 import javax.inject.Inject;
 
-import app.caueferreira.oneapptocatchthemall.AndroidApplication;
 import app.caueferreira.oneapptocatchthemall.R;
 import app.caueferreira.oneapptocatchthemall.presentation.presenter.ListPokemonPresenter;
 import app.caueferreira.oneapptocatchthemall.presentation.view.ListPokemonView;
-import app.caueferreira.oneapptocatchthemall.view.EndlessRecyclerOnScrollListener;
-import app.caueferreira.oneapptocatchthemall.view.PokemonAdapter;
+import app.caueferreira.oneapptocatchthemall.presentation.view.custom.EndlessRecyclerOnScrollListener;
+import app.caueferreira.oneapptocatchthemall.presentation.view.adapter.PokemonAdapter;
 
 /**
  * A placeholder fragment containing a simple view.
  */
-public class ListPokemonActivityFragment extends Fragment implements ListPokemonView {
+public class ListPokemonActivityFragment extends BaseFragment implements ListPokemonView {
 
     public ListPokemonActivityFragment() {
     }
@@ -39,7 +37,7 @@ public class ListPokemonActivityFragment extends Fragment implements ListPokemon
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list_pokemon, container, false);
-        ((AndroidApplication) getActivity().getApplication()).getApplicationComponent().inject(this);
+        getApplicationComponent().inject(this);
 
         listPokemonPresenter.setView(this);
 

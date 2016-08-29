@@ -1,11 +1,10 @@
-package app.caueferreira.oneapptocatchthemall.activity;
+package app.caueferreira.oneapptocatchthemall.presentation.view.fragment;
 
 import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,18 +17,17 @@ import java.net.URL;
 
 import javax.inject.Inject;
 
-import app.caueferreira.oneapptocatchthemall.AndroidApplication;
 import app.caueferreira.oneapptocatchthemall.R;
 import app.caueferreira.oneapptocatchthemall.domain.entity.Pokemon;
 import app.caueferreira.oneapptocatchthemall.presentation.presenter.PokemonDetailPresenter;
 import app.caueferreira.oneapptocatchthemall.presentation.view.PokemonDetailView;
-import app.caueferreira.oneapptocatchthemall.view.MoveAdapter;
-import app.caueferreira.oneapptocatchthemall.view.StatsAdapter;
+import app.caueferreira.oneapptocatchthemall.presentation.view.adapter.MoveAdapter;
+import app.caueferreira.oneapptocatchthemall.presentation.view.adapter.StatsAdapter;
 
 /**
  * A placeholder fragment containing a simple view.
  */
-public class PokemonDetailActivityFragment extends Fragment implements PokemonDetailView {
+public class PokemonDetailActivityFragment extends BaseFragment implements PokemonDetailView {
 
     public PokemonDetailActivityFragment() {
     }
@@ -54,7 +52,7 @@ public class PokemonDetailActivityFragment extends Fragment implements PokemonDe
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_pokemon_detail, container, false);
-        ((AndroidApplication) getActivity().getApplication()).getApplicationComponent().inject(this);
+        getApplicationComponent().inject(this);
 
         pokemonDetailPresenter.setView(this);
 

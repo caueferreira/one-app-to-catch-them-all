@@ -1,4 +1,4 @@
-package app.caueferreira.oneapptocatchthemall.view;
+package app.caueferreira.oneapptocatchthemall.presentation.view.adapter;
 
 import android.app.Activity;
 import android.support.v7.widget.RecyclerView;

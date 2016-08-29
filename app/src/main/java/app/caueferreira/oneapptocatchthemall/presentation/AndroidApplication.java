@@ -1,6 +1,10 @@
-package app.caueferreira.oneapptocatchthemall;
+package app.caueferreira.oneapptocatchthemall.presentation;
 
 import android.app.Application;
+
+import app.caueferreira.oneapptocatchthemall.presentation.internal.component.ApplicationComponent;
+import app.caueferreira.oneapptocatchthemall.presentation.internal.component.DaggerApplicationComponent;
+import app.caueferreira.oneapptocatchthemall.presentation.internal.module.ApplicationModule;
 
 /**
  * Created by caueferreira on 8/24/16.

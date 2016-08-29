@@ -10,9 +10,9 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:name=".AndroidApplication">
+        android:name=".presentation.AndroidApplication">
         <activity
-            android:name=".activity.ListPokemonActivity"
+            android:name=".presentation.view.activity.ListPokemonActivity"
             android:label="@string/title_activity_list_pokemon"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.PokemonDetailActivity"
+            android:name=".presentation.view.activity.PokemonDetailActivity"
             android:label="@string/title_activity_pokemon_detail"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>

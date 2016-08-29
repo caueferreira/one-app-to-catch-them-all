@@ -1,9 +1,10 @@
-package app.caueferreira.oneapptocatchthemall;
+package app.caueferreira.oneapptocatchthemall.presentation.internal.component;
 
 import javax.inject.Singleton;
 
-import app.caueferreira.oneapptocatchthemall.activity.ListPokemonActivityFragment;
-import app.caueferreira.oneapptocatchthemall.activity.PokemonDetailActivityFragment;
+import app.caueferreira.oneapptocatchthemall.presentation.internal.module.ApplicationModule;
+import app.caueferreira.oneapptocatchthemall.presentation.view.fragment.ListPokemonActivityFragment;
+import app.caueferreira.oneapptocatchthemall.presentation.view.fragment.PokemonDetailActivityFragment;
 import app.caueferreira.oneapptocatchthemall.data.repository.Pokedex;
 import app.caueferreira.oneapptocatchthemall.domain.interactor.ListPokemonCase;
 import app.caueferreira.oneapptocatchthemall.domain.interactor.PokemonDetailCase;

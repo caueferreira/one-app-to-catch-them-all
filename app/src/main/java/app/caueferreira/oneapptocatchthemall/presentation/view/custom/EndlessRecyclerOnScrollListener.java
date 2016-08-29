@@ -1,4 +1,4 @@
-package app.caueferreira.oneapptocatchthemall.view;
+package app.caueferreira.oneapptocatchthemall.presentation.view.custom;
 
 /**
  * Created by caueferreira on 8/18/16.

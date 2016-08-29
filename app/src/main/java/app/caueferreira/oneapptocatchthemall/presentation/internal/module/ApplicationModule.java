@@ -1,10 +1,11 @@
-package app.caueferreira.oneapptocatchthemall;
+package app.caueferreira.oneapptocatchthemall.presentation.internal.module;
 
 import javax.inject.Singleton;
 
 import app.caueferreira.oneapptocatchthemall.data.repository.Pokedex;
 import app.caueferreira.oneapptocatchthemall.domain.interactor.ListPokemonCase;
 import app.caueferreira.oneapptocatchthemall.domain.interactor.PokemonDetailCase;
+import app.caueferreira.oneapptocatchthemall.presentation.AndroidApplication;
 import dagger.Module;
 import dagger.Provides;
 
