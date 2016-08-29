@@ -13,6 +13,8 @@ import java.util.List;
 
 import app.caueferreira.oneapptocatchthemall.R;
 import app.caueferreira.oneapptocatchthemall.presentation.view.activity.PokemonDetailActivity;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by caueferreira on 8/18/16.
@@ -23,13 +25,14 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.ViewHold
     private Activity mActivity;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.pokemonName)
         public TextView mTxtPokemonName;
+        @BindView(R.id.pokemonNumber)
         public TextView mTxtPokemonNumber;
 
         public ViewHolder(final View view) {
             super(view);
-            mTxtPokemonName = (TextView) view.findViewById(R.id.pokemonName);
-            mTxtPokemonNumber = (TextView) view.findViewById(R.id.pokemonNumber);
+            ButterKnife.bind(this, view);
         }
     }
 

@@ -12,6 +12,8 @@ import java.util.List;
 
 import app.caueferreira.oneapptocatchthemall.R;
 import app.caueferreira.oneapptocatchthemall.presentation.model.MoveModel;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by caueferreira on 8/21/16.
@@ -22,11 +24,12 @@ public class MoveAdapter extends RecyclerView.Adapter<MoveAdapter.ViewHolder> {
     private Activity mActivity;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.move)
         public TextView mTxtMove;
 
         public ViewHolder(final View view) {
             super(view);
-            mTxtMove = (TextView) view.findViewById(R.id.move);
+            ButterKnife.bind(this, view);
         }
     }
 

@@ -23,6 +23,8 @@ import app.caueferreira.oneapptocatchthemall.presentation.presenter.PokemonDetai
 import app.caueferreira.oneapptocatchthemall.presentation.view.PokemonDetailView;
 import app.caueferreira.oneapptocatchthemall.presentation.view.adapter.MoveAdapter;
 import app.caueferreira.oneapptocatchthemall.presentation.view.adapter.StatsAdapter;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -32,14 +34,25 @@ public class PokemonDetailActivityFragment extends BaseFragment implements Pokem
     public PokemonDetailActivityFragment() {
     }
 
-    private TextView mTxtName, mTxtNumber, mTxtType, mTxtType2;
-    private ImageView mImgSprite;
+    @BindView(R.id.name)
+    TextView mTxtName;
+    @BindView(R.id.number)
+    TextView mTxtNumber;
+    @BindView(R.id.type)
+    TextView mTxtType;
+    @BindView(R.id.type2)
+    TextView mTxtType2;
+    @BindView(R.id.sprite)
+    ImageView mImgSprite;
 
-    private RecyclerView mMovesView;
+    @BindView(R.id.move_list)
+    RecyclerView mMovesView;
+    @BindView(R.id.stats_list)
+    RecyclerView mStatsView;
+
     private RecyclerView.LayoutManager mLayoutManager;
     private MoveAdapter mMoveAdapter;
 
-    private RecyclerView mStatsView;
     private StatsAdapter mStatsAdapter;
     private RecyclerView.LayoutManager mLayoutManager2;
 
@@ -53,20 +66,13 @@ public class PokemonDetailActivityFragment extends BaseFragment implements Pokem
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_pokemon_detail, container, false);
         getApplicationComponent().inject(this);
+        ButterKnife.bind(this, view);
 
         pokemonDetailPresenter.setView(this);
 
         final int position = getActivity().getIntent().getIntExtra("number", 0);
 
         pokemonDetailPresenter.get(position);
-
-        mTxtName = (TextView) view.findViewById(R.id.name);
-        mTxtNumber = (TextView) view.findViewById(R.id.number);
-        mImgSprite = (ImageView) view.findViewById(R.id.sprite);
-        mTxtType = (TextView) view.findViewById(R.id.type);
-        mTxtType2 = (TextView) view.findViewById(R.id.type2);
-        mMovesView = (RecyclerView) view.findViewById(R.id.move_list);
-        mStatsView = (RecyclerView) view.findViewById(R.id.stats_list);
 
         mMovesView.setHasFixedSize(true);
         mStatsView.setHasFixedSize(true);

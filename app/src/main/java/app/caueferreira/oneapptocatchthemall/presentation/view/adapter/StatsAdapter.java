@@ -12,6 +12,8 @@ import java.util.List;
 
 import app.caueferreira.oneapptocatchthemall.R;
 import app.caueferreira.oneapptocatchthemall.presentation.model.StatsModel;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by caueferreira on 8/22/16.
@@ -22,13 +24,14 @@ public class StatsAdapter extends RecyclerView.Adapter<StatsAdapter.ViewHolder> 
     private Activity mActivity;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.name)
         public TextView mTxtName;
+        @BindView(R.id.value)
         public TextView mTxtValue;
 
         public ViewHolder(final View view) {
             super(view);
-            mTxtName = (TextView) view.findViewById(R.id.name);
-            mTxtValue = (TextView) view.findViewById(R.id.value);
+            ButterKnife.bind(this, view);
         }
     }
 

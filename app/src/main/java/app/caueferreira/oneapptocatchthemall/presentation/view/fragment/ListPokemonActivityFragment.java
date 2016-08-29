@@ -15,6 +15,8 @@ import app.caueferreira.oneapptocatchthemall.presentation.presenter.ListPokemonP
 import app.caueferreira.oneapptocatchthemall.presentation.view.ListPokemonView;
 import app.caueferreira.oneapptocatchthemall.presentation.view.custom.EndlessRecyclerOnScrollListener;
 import app.caueferreira.oneapptocatchthemall.presentation.view.adapter.PokemonAdapter;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -24,7 +26,9 @@ public class ListPokemonActivityFragment extends BaseFragment implements ListPok
     public ListPokemonActivityFragment() {
     }
 
-    private RecyclerView mRecyclerView;
+    @BindView(R.id.pokemon_list)
+    RecyclerView mRecyclerView;
+
     private PokemonAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
@@ -38,10 +42,9 @@ public class ListPokemonActivityFragment extends BaseFragment implements ListPok
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list_pokemon, container, false);
         getApplicationComponent().inject(this);
+        ButterKnife.bind(this, view);
 
         listPokemonPresenter.setView(this);
-
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.pokemon_list);
 
         mRecyclerView.setHasFixedSize(true);
 
