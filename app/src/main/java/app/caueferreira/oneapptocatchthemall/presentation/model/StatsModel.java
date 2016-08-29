@@ -1,24 +1,24 @@
-package app.caueferreira.oneapptocatchthemall.domain.entity;
+package app.caueferreira.oneapptocatchthemall.presentation.model;
 
 /**
- * Created by caueferreira on 8/25/16.
+ * Created by caueferreira on 8/29/16.
  */
 
-public class Stats {
+public class StatsModel {
 
     private String name;
-    private int value;
+    private String value;
 
-    public static Stats create() {
-        return new Stats();
+    public static StatsModel create() {
+        return new StatsModel();
     }
 
-    public Stats withName(final String name) {
+    public StatsModel withName(final String name) {
         this.name = name;
         return this;
     }
 
-    public Stats withValue(final int value) {
+    public StatsModel withValue(final String value) {
         this.value = value;
         return this;
     }
@@ -27,13 +27,13 @@ public class Stats {
         return name;
     }
 
-    public int getValue() {
+    public String getValue() {
         return value;
     }
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("Stats{");
+        final StringBuilder sb = new StringBuilder("StatsModel{");
         sb.append("name='").append(name).append('\'');
         sb.append(", value=").append(value);
         sb.append('}');

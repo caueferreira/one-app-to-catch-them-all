@@ -6,6 +6,8 @@ import javax.inject.Inject;
 
 import app.caueferreira.oneapptocatchthemall.domain.entity.Pokemon;
 import app.caueferreira.oneapptocatchthemall.domain.interactor.PokemonDetailCase;
+import app.caueferreira.oneapptocatchthemall.presentation.mapper.PokemonModelMapper;
+import app.caueferreira.oneapptocatchthemall.presentation.model.PokemonModel;
 import app.caueferreira.oneapptocatchthemall.presentation.view.PokemonDetailView;
 import rx.Subscriber;
 
@@ -16,11 +18,13 @@ import rx.Subscriber;
 public class PokemonDetailPresenter {
 
     private PokemonDetailView pokemonDetailView;
+    private PokemonModelMapper pokemonModelMapper;
     private final PokemonDetailCase pokemonDetailCase;
 
     @Inject
     public PokemonDetailPresenter(final PokemonDetailCase pokemonDetailCase) {
         this.pokemonDetailCase = pokemonDetailCase;
+        this.pokemonModelMapper = new PokemonModelMapper();
     }
 
     public void setView(@NonNull final PokemonDetailView pokemonDetailView) {
@@ -40,8 +44,8 @@ public class PokemonDetailPresenter {
         this.pokemonDetailCase.execute(new PokemonDetailSubscriber());
     }
 
-    private void pokemonDetail(final Pokemon pokemon) {
-        this.pokemonDetailView.renderPokemon(pokemon);
+    private void pokemonDetail(final PokemonModel pokemonModel) {
+        this.pokemonDetailView.renderPokemon(pokemonModel);
     }
 
     private final class PokemonDetailSubscriber extends Subscriber<Pokemon> {
@@ -55,7 +59,7 @@ public class PokemonDetailPresenter {
         }
 
         @Override public void onNext(final Pokemon pokemon) {
-            PokemonDetailPresenter.this.pokemonDetail(pokemon);
+            PokemonDetailPresenter.this.pokemonDetail(pokemonModelMapper.transform(pokemon));
         }
     }
 }
