@@ -1,6 +1,6 @@
 package app.caueferreira.oneapptocatchthemall.presentation.view;
 
-import app.caueferreira.oneapptocatchthemall.presentation.model.PokemonModel;
+import app.caueferreira.oneapptocatchthemall.presentation.model.response.PokemonResponse;
 
 /**
  * Created by caueferreira on 8/28/16.
@@ -8,5 +8,5 @@ import app.caueferreira.oneapptocatchthemall.presentation.model.PokemonModel;
 
 public interface PokemonDetailView extends BaseView{
 
-    void renderPokemon(final PokemonModel pokemonModel);
+    void renderPokemon(final PokemonResponse pokemonResponse);
 }

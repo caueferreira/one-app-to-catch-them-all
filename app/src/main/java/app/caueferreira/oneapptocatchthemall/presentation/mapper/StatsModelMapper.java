@@ -7,7 +7,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import app.caueferreira.oneapptocatchthemall.domain.entity.Stats;
-import app.caueferreira.oneapptocatchthemall.presentation.model.StatsModel;
+import app.caueferreira.oneapptocatchthemall.presentation.model.response.StatsResponse;
 
 /**
  * Created by caueferreira on 8/29/16.
@@ -20,19 +20,19 @@ public class StatsModelMapper {
     public StatsModelMapper() {
     }
 
-    public StatsModel transform(final Stats stats) {
+    public StatsResponse transform(final Stats stats) {
 
-        return StatsModel.create()
+        return StatsResponse.create()
                 .withName(stats.getName())
                 .withValue(String.valueOf(stats.getValue()));
     }
 
-    public List<StatsModel> transform(final List<Stats> statsList){
-        List<StatsModel> statsModelList = new ArrayList<>();
+    public List<StatsResponse> transform(final List<Stats> statsList){
+        List<StatsResponse> statsResponseList = new ArrayList<>();
 
         for(Stats stats : statsList)
-            statsModelList.add(transform(stats));
+            statsResponseList.add(transform(stats));
 
-        return statsModelList;
+        return statsResponseList;
     }
 }

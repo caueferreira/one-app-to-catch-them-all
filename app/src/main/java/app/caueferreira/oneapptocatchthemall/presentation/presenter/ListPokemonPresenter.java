@@ -5,6 +5,8 @@ import android.support.annotation.NonNull;
 import javax.inject.Inject;
 
 import app.caueferreira.oneapptocatchthemall.domain.interactor.ListPokemonCase;
+import app.caueferreira.oneapptocatchthemall.presentation.model.request.PokemonListRequest;
+import app.caueferreira.oneapptocatchthemall.presentation.model.response.PokemonNameResponse;
 import app.caueferreira.oneapptocatchthemall.presentation.view.ListPokemonView;
 import rx.Subscriber;
 
@@ -34,13 +36,13 @@ public class ListPokemonPresenter {
         listPokemonView.hideLoading();
     }
 
-    public void list(final int offset, final int limit) {
-        this.listPokemonCase.list(offset, limit);
+    public void list(final PokemonListRequest pokemonListRequest) {
+        this.listPokemonCase.list(pokemonListRequest.getOffset(), pokemonListRequest.getLimit());
         this.listPokemonCase.execute(new PokemonListSubscriber());
     }
 
     private void addPokemon(final String pokemonName) {
-        this.listPokemonView.renderPokemon(pokemonName);
+        this.listPokemonView.renderPokemon(PokemonNameResponse.create().withName(pokemonName));
     }
 
     private void listPokemon(){

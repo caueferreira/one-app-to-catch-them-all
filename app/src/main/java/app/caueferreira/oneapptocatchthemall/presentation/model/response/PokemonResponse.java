@@ -1,4 +1,4 @@
-package app.caueferreira.oneapptocatchthemall.presentation.model;
+package app.caueferreira.oneapptocatchthemall.presentation.model.response;
 
 import java.util.List;
 
@@ -6,44 +6,44 @@ import java.util.List;
  * Created by caueferreira on 8/29/16.
  */
 
-public class PokemonModel {
+public class PokemonResponse {
     private String number;
     private String name, sprite;
-    private List<MoveModel> moveList;
-    private List<StatsModel> statsList;
-    private List<TypeModel> typeList;
+    private List<MoveResponse> moveList;
+    private List<StatsResponse> statsList;
+    private List<TypeResponse> typeList;
 
-    public static PokemonModel create() {
-        return new PokemonModel();
+    public static PokemonResponse create() {
+        return new PokemonResponse();
     }
 
-    public PokemonModel withName(final String name) {
+    public PokemonResponse withName(final String name) {
         this.name = name;
         return this;
     }
 
-    public PokemonModel withNumber(final String number) {
+    public PokemonResponse withNumber(final String number) {
         this.number = number;
         return this;
     }
 
-    public PokemonModel withSprite(final String sprite) {
+    public PokemonResponse withSprite(final String sprite) {
         this.sprite = sprite;
         return this;
     }
 
-    public PokemonModel withMoves(final List<MoveModel> moveList) {
+    public PokemonResponse withMoves(final List<MoveResponse> moveList) {
         this.moveList = moveList;
         return this;
     }
 
 
-    public PokemonModel withStats(final List<StatsModel> statsList) {
+    public PokemonResponse withStats(final List<StatsResponse> statsList) {
         this.statsList = statsList;
         return this;
     }
 
-    public PokemonModel withTypes(final List<TypeModel> typeList) {
+    public PokemonResponse withTypes(final List<TypeResponse> typeList) {
         this.typeList = typeList;
         return this;
     }
@@ -60,21 +60,21 @@ public class PokemonModel {
         return sprite;
     }
 
-    public List<MoveModel> getMoves() {
+    public List<MoveResponse> getMoves() {
         return moveList;
     }
 
-    public List<StatsModel> getStats() {
+    public List<StatsResponse> getStats() {
         return statsList;
     }
 
-    public List<TypeModel> getTypes() {
+    public List<TypeResponse> getTypes() {
         return typeList;
     }
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("PokemonModel{");
+        final StringBuilder sb = new StringBuilder("PokemonResponse{");
         sb.append("number='").append(number).append('\'');
         sb.append(", name='").append(name).append('\'');
         sb.append(", sprite='").append(sprite).append('\'');

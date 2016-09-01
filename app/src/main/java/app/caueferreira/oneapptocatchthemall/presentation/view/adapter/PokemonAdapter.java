@@ -8,10 +8,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import app.caueferreira.oneapptocatchthemall.R;
+import app.caueferreira.oneapptocatchthemall.presentation.model.request.PokemonRequest;
+import app.caueferreira.oneapptocatchthemall.presentation.model.response.PokemonNameResponse;
 import app.caueferreira.oneapptocatchthemall.presentation.view.activity.PokemonDetailActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,7 +25,7 @@ import butterknife.ButterKnife;
  */
 
 public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.ViewHolder> {
-    private List<String> mPokemons;
+    private List<PokemonNameResponse> mPokemons;
     private Activity mActivity;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -42,11 +46,11 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.ViewHold
     }
 
 
-    public void add(final String pokemonName) {
-        this.mPokemons.add(pokemonName);
+    public void add(final PokemonNameResponse pokemonNameResponse) {
+        this.mPokemons.add(pokemonNameResponse);
     }
 
-    public PokemonAdapter(final List<String> pokemons) {
+    public PokemonAdapter(final List<PokemonNameResponse> pokemons) {
         this.mPokemons = pokemons;
     }
 
@@ -62,13 +66,13 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        holder.mTxtPokemonName.setText(mPokemons.get(position));
+        holder.mTxtPokemonName.setText(mPokemons.get(position).getName());
         holder.mTxtPokemonNumber.setText(String.valueOf(position + 1));
 
         holder.itemView.setOnClickListener(v -> {
 
             Intent myIntent = new Intent(mActivity, PokemonDetailActivity.class);
-            myIntent.putExtra("number", position + 1);
+            myIntent.putExtra("request", new Gson().toJson(PokemonRequest.create().withNumber(position + 1)));
             mActivity.startActivity(myIntent);
         });
     }

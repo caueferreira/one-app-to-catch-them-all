@@ -7,7 +7,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import app.caueferreira.oneapptocatchthemall.domain.entity.Type;
-import app.caueferreira.oneapptocatchthemall.presentation.model.TypeModel;
+import app.caueferreira.oneapptocatchthemall.presentation.model.response.TypeResponse;
 
 /**
  * Created by caueferreira on 8/29/16.
@@ -20,18 +20,18 @@ public class TypeModelMapper {
     public TypeModelMapper() {
     }
 
-    public TypeModel transform(final Type type) {
+    public TypeResponse transform(final Type type) {
 
-        return TypeModel.create()
+        return TypeResponse.create()
                 .withName(type.getName());
     }
 
-    public List<TypeModel> transform(final List<Type> typeList) {
-        List<TypeModel> typeModelList = new ArrayList<>();
+    public List<TypeResponse> transform(final List<Type> typeList) {
+        List<TypeResponse> typeResponseList = new ArrayList<>();
 
         for (Type type : typeList)
-            typeModelList.add(transform(type));
+            typeResponseList.add(transform(type));
 
-        return typeModelList;
+        return typeResponseList;
     }
 }

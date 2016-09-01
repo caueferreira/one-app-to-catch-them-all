@@ -7,7 +7,8 @@ import javax.inject.Inject;
 import app.caueferreira.oneapptocatchthemall.domain.entity.Pokemon;
 import app.caueferreira.oneapptocatchthemall.domain.interactor.PokemonDetailCase;
 import app.caueferreira.oneapptocatchthemall.presentation.mapper.PokemonModelMapper;
-import app.caueferreira.oneapptocatchthemall.presentation.model.PokemonModel;
+import app.caueferreira.oneapptocatchthemall.presentation.model.request.PokemonRequest;
+import app.caueferreira.oneapptocatchthemall.presentation.model.response.PokemonResponse;
 import app.caueferreira.oneapptocatchthemall.presentation.view.PokemonDetailView;
 import rx.Subscriber;
 
@@ -39,13 +40,13 @@ public class PokemonDetailPresenter {
         pokemonDetailView.hideLoading();
     }
 
-    public void get(final int id) {
-        this.pokemonDetailCase.get(id);
+    public void get(final PokemonRequest pokemonRequest) {
+        this.pokemonDetailCase.get(pokemonRequest.getNumber());
         this.pokemonDetailCase.execute(new PokemonDetailSubscriber());
     }
 
-    private void pokemonDetail(final PokemonModel pokemonModel) {
-        this.pokemonDetailView.renderPokemon(pokemonModel);
+    private void pokemonDetail(final PokemonResponse pokemonResponse) {
+        this.pokemonDetailView.renderPokemon(pokemonResponse);
     }
 
     private final class PokemonDetailSubscriber extends Subscriber<Pokemon> {

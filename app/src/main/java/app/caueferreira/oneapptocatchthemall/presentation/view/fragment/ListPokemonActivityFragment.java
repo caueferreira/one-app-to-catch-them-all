@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import javax.inject.Inject;
 
 import app.caueferreira.oneapptocatchthemall.R;
+import app.caueferreira.oneapptocatchthemall.presentation.model.request.PokemonListRequest;
+import app.caueferreira.oneapptocatchthemall.presentation.model.response.PokemonNameResponse;
 import app.caueferreira.oneapptocatchthemall.presentation.presenter.ListPokemonPresenter;
 import app.caueferreira.oneapptocatchthemall.presentation.view.ListPokemonView;
 import app.caueferreira.oneapptocatchthemall.presentation.view.custom.EndlessRecyclerOnScrollListener;
@@ -56,12 +58,12 @@ public class ListPokemonActivityFragment extends BaseFragment implements ListPok
 
         showLoading();
 
-        listPokemonPresenter.list(0, 10);
+        listPokemonPresenter.list(PokemonListRequest.create().withOffset(0).withLimit(10));
 
         mRecyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener((LinearLayoutManager) mLayoutManager) {
             @Override
             public void onLoadMore(int page) {
-                listPokemonPresenter.list(10 * page, 10);
+                listPokemonPresenter.list(PokemonListRequest.create().withOffset(page * 10).withLimit(10));
             }
         });
 
@@ -87,8 +89,8 @@ public class ListPokemonActivityFragment extends BaseFragment implements ListPok
     }
 
     @Override
-    public void renderPokemon(final String pokemonName) {
-        mAdapter.add(pokemonName);
+    public void renderPokemon(final PokemonNameResponse pokemonNameResponse) {
+        mAdapter.add(pokemonNameResponse);
     }
 
     @Override

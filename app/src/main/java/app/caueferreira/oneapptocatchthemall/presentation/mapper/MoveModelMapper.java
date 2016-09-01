@@ -7,7 +7,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import app.caueferreira.oneapptocatchthemall.domain.entity.Move;
-import app.caueferreira.oneapptocatchthemall.presentation.model.MoveModel;
+import app.caueferreira.oneapptocatchthemall.presentation.model.response.MoveResponse;
 
 /**
  * Created by caueferreira on 8/29/16.
@@ -20,18 +20,18 @@ public class MoveModelMapper {
     public MoveModelMapper() {
     }
 
-    public MoveModel transform(final Move move) {
+    public MoveResponse transform(final Move move) {
 
-        return MoveModel.create()
+        return MoveResponse.create()
                 .withName(move.getName());
     }
 
-    public List<MoveModel> transform(final List<Move> moveList){
-        List<MoveModel> moveModelList = new ArrayList<>();
+    public List<MoveResponse> transform(final List<Move> moveList){
+        List<MoveResponse> moveResponseList = new ArrayList<>();
 
         for(Move move : moveList)
-            moveModelList.add(transform(move));
+            moveResponseList.add(transform(move));
 
-        return moveModelList;
+        return moveResponseList;
     }
 }

@@ -13,12 +13,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+
 import java.net.URL;
 
 import javax.inject.Inject;
 
 import app.caueferreira.oneapptocatchthemall.R;
-import app.caueferreira.oneapptocatchthemall.presentation.model.PokemonModel;
+import app.caueferreira.oneapptocatchthemall.presentation.model.request.PokemonRequest;
+import app.caueferreira.oneapptocatchthemall.presentation.model.response.PokemonResponse;
 import app.caueferreira.oneapptocatchthemall.presentation.presenter.PokemonDetailPresenter;
 import app.caueferreira.oneapptocatchthemall.presentation.view.PokemonDetailView;
 import app.caueferreira.oneapptocatchthemall.presentation.view.adapter.MoveAdapter;
@@ -70,9 +73,10 @@ public class PokemonDetailActivityFragment extends BaseFragment implements Pokem
 
         pokemonDetailPresenter.setView(this);
 
-        final int position = getActivity().getIntent().getIntExtra("number", 0);
+        final PokemonRequest pokemonRequest = new Gson().fromJson(
+                getActivity().getIntent().getStringExtra("request"), PokemonRequest.class);
 
-        pokemonDetailPresenter.get(position);
+        pokemonDetailPresenter.get(pokemonRequest);
 
         mMovesView.setHasFixedSize(true);
         mStatsView.setHasFixedSize(true);
@@ -94,8 +98,8 @@ public class PokemonDetailActivityFragment extends BaseFragment implements Pokem
         return view;
     }
 
-    private void loadSprite(final PokemonModel pokemonModel) {
-        new RetrieveSpriteTask().execute(pokemonModel);
+    private void loadSprite(final PokemonResponse pokemonResponse) {
+        new RetrieveSpriteTask().execute(pokemonResponse);
     }
 
     private void showLoading(final boolean toggle) {
@@ -110,23 +114,23 @@ public class PokemonDetailActivityFragment extends BaseFragment implements Pokem
     }
 
     @Override
-    public void renderPokemon(final PokemonModel pokemonModel) {
-        mTxtName.setText(pokemonModel.getName());
-        mTxtNumber.setText(pokemonModel.getNumber());
-        mTxtType.setText(pokemonModel.getTypes().get(0).getName());
+    public void renderPokemon(final PokemonResponse pokemonResponse) {
+        mTxtName.setText(pokemonResponse.getName());
+        mTxtNumber.setText(pokemonResponse.getNumber());
+        mTxtType.setText(pokemonResponse.getTypes().get(0).getName());
 
-        if (pokemonModel.getTypes().size() > 1)
-            mTxtType2.setText(pokemonModel.getTypes().get(1).getName());
+        if (pokemonResponse.getTypes().size() > 1)
+            mTxtType2.setText(pokemonResponse.getTypes().get(1).getName());
         else
             mTxtType2.setVisibility(View.INVISIBLE);
 
-        mMoveAdapter.addAll(pokemonModel.getMoves(), getActivity());
+        mMoveAdapter.addAll(pokemonResponse.getMoves(), getActivity());
         mMovesView.getAdapter().notifyDataSetChanged();
 
-        mStatsAdapter.addAll(pokemonModel.getStats(), getActivity());
+        mStatsAdapter.addAll(pokemonResponse.getStats(), getActivity());
         mStatsView.getAdapter().notifyDataSetChanged();
 
-        loadSprite(pokemonModel);
+        loadSprite(pokemonResponse);
     }
 
     @Override
@@ -139,14 +143,14 @@ public class PokemonDetailActivityFragment extends BaseFragment implements Pokem
         showLoading(false);
     }
 
-    private class RetrieveSpriteTask extends AsyncTask<PokemonModel, Void, Bitmap> {
+    private class RetrieveSpriteTask extends AsyncTask<PokemonResponse, Void, Bitmap> {
 
         @Override
-        protected Bitmap doInBackground(PokemonModel... pokemonModels) {
+        protected Bitmap doInBackground(PokemonResponse... pokemonResponses) {
 
             URL url = null;
             try {
-                url = new URL(pokemonModels[0].getSprite());
+                url = new URL(pokemonResponses[0].getSprite());
                 Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
                 return bmp;
             } catch (Exception e) {

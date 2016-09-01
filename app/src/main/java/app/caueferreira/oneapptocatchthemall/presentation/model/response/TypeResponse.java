@@ -1,18 +1,18 @@
-package app.caueferreira.oneapptocatchthemall.presentation.model;
+package app.caueferreira.oneapptocatchthemall.presentation.model.response;
 
 /**
  * Created by caueferreira on 8/29/16.
  */
 
-public class TypeModel {
+public class TypeResponse {
 
     private String name;
 
-    public static TypeModel create() {
-        return new TypeModel();
+    public static TypeResponse create() {
+        return new TypeResponse();
     }
 
-    public TypeModel withName(final String name) {
+    public TypeResponse withName(final String name) {
         this.name = name;
         return this;
     }
@@ -23,7 +23,7 @@ public class TypeModel {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("TypeModel{");
+        final StringBuilder sb = new StringBuilder("TypeResponse{");
         sb.append("name='").append(name).append('\'');
         sb.append('}');
         return sb.toString();

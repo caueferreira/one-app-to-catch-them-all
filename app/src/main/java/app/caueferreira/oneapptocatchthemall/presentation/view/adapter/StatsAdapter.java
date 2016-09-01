@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import app.caueferreira.oneapptocatchthemall.R;
-import app.caueferreira.oneapptocatchthemall.presentation.model.StatsModel;
+import app.caueferreira.oneapptocatchthemall.presentation.model.response.StatsResponse;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -20,7 +20,7 @@ import butterknife.ButterKnife;
  */
 
 public class StatsAdapter extends RecyclerView.Adapter<StatsAdapter.ViewHolder> {
-    private List<StatsModel> mStats;
+    private List<StatsResponse> mStats;
     private Activity mActivity;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -40,13 +40,13 @@ public class StatsAdapter extends RecyclerView.Adapter<StatsAdapter.ViewHolder> 
         mActivity = activity;
     }
 
-    public StatsAdapter addAll(final List<StatsModel> stats, final Activity activity) {
+    public StatsAdapter addAll(final List<StatsResponse> stats, final Activity activity) {
         this.mStats.addAll(stats);
         mActivity = activity;
         return this;
     }
 
-    public StatsAdapter(final List<StatsModel> stats) {
+    public StatsAdapter(final List<StatsResponse> stats) {
         this.mStats = stats;
     }
 
