@@ -63,7 +63,7 @@ public class ListPokemonActivityFragment extends BaseFragment implements ListPok
         mRecyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener((LinearLayoutManager) mLayoutManager) {
             @Override
             public void onLoadMore(int page) {
-                listPokemonPresenter.list(PokemonListRequest.create().withOffset(page * 10).withLimit(10));
+                listPokemonPresenter.list(PokemonListRequest.create().withOffset((page-1) * 10).withLimit(10));
             }
         });
 
