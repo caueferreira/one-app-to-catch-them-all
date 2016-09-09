@@ -3,6 +3,7 @@ package app.caueferreira.oneapptocatchthemall.domain.interactor;
 import javax.inject.Inject;
 
 import app.caueferreira.oneapptocatchthemall.data.repository.Pokedex;
+import app.caueferreira.oneapptocatchthemall.domain.executor.ThreadExecutor;
 import rx.Observable;
 
 /**
@@ -14,8 +15,9 @@ public class ListPokemonCase extends PokemonCase {
     private final Pokedex pokedex;
 
     @Inject
-    public ListPokemonCase() {
-        pokedex = new Pokedex();
+    public ListPokemonCase(final ThreadExecutor subscriberOn, final ThreadExecutor observerOn, final Pokedex pokedex) {
+        super(subscriberOn, observerOn);
+        this.pokedex = pokedex;
     }
 
     public Observable list(final int offset, final int limit) {
